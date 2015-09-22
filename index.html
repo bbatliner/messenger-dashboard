@@ -1,7 +1,22 @@
 <html>
     <body>
-        <script src="index.js"></script>
+        <h2>Step 1</h2>
+        <p>Go to your <a href="https://www.facebook.com/messages">messages</a> and run this: <code>prompt('Copy this text!', window.require('DTSGInitialData').token)</code></p>
+        <label for="fb_dtsg">Type that code here:</label>
+        <input id="fb_dtsg" type="password"></input>
 
-        <div class="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
+        <h2>Step 2</h2>
+        <p>Go <a href="http://findmyfbid.com/">here</a> and find your Facebook ID.</p>
+        <label for="fb_id">Type your ID here:</label>
+        <input id="fb_id" type="text"></input>
+
+        <h2>Step 3</h2>
+        <label for="recipient">Type the name of the friend here:</label>
+        <input id="recipient" type="text"></input><br>
+        <label for="message">Type the message here:</label>
+        <input id="message" type="text"></input><br>
+        <input id="submit" type="submit" onclick="sendMessage()"></input>
+
+        <script src="index.js"></script>
     </body>
 </html>

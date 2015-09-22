@@ -1,0 +1,9 @@
+1. POST http://findmyfbid.com/?url=https%3A%2F%2Fwww.facebook.com%2Fbrendan.batliner
+
+2. Get user ID out of Location response header (100004153596645)
+
+3. GET https://www.facebook.com/ajax/chat/user_info_all.php?__user=100004153596645&__a=1&viewer=100004153596645
+
+4. Acquire 'fb_dtsg', the anti-csrf token that is literally stored on the /messages page
+
+5. USE THE MAGIC spam() SCRIPT TO FORGE A REQUEST (https://gist.githubusercontent.com/FiloSottile/4215248/raw/71a59ef4e23271a78fb90dfb748c0606a4d3a385/krumiro_en.js)
