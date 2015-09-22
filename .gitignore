@@ -1,1 +1,13 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Distribution/minified files
+dist
+app/bundle.js
+app/bundle.css
+
+# Dependency directory
+# https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
