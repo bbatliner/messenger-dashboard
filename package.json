@@ -1,0 +1,26 @@
+{
+  "name": "messenger-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "facebook-chat-api": "^0.2.11"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.33.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbatliner/messenger-dashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bbatliner/messenger-dashboard/issues"
+  },
+  "homepage": "https://github.com/bbatliner/messenger-dashboard#readme"
+}
