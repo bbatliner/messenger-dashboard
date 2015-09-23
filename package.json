@@ -4,9 +4,22 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+    "ampersand-app": "^1.0.4",
+    "ampersand-collection": "^1.5.0",
+    "ampersand-dom": "^1.4.0",
+    "ampersand-form-view": "^5.1.1",
+    "ampersand-input-view": "^5.0.0",
+    "ampersand-model": "^6.0.2",
+    "ampersand-router": "^3.0.2",
+    "ampersand-view": "^8.0.1",
+    "ampersand-view-switcher": "^2.0.0",
     "bootstrap": "^3.3.5",
+    "domify": "^1.4.0",
+    "domready": "^1.0.8",
     "facebook-chat-api": "^0.2.11",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "local-links": "^1.4.0",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "browserify": "^11.1.0",
@@ -19,7 +32,9 @@
     "grunt-contrib-cssmin": "~0.14.0",
     "grunt-contrib-htmlmin": "^0.4.0",
     "grunt-contrib-jshint": "~0.11.3",
-    "grunt-contrib-uglify": "~0.9.2"
+    "grunt-contrib-uglify": "~0.9.2",
+    "jade": "^1.11.0",
+    "jadeify": "^4.4.0"
   },
   "browser": {
     "jquery": "./node_modules/jquery/dist/jquery.min.js"
@@ -28,11 +43,16 @@
     "jquery": "jQuery",
     "./node_modules/bootstrap/dist/js/bootstrap.min.js": {
       "exports": "bootstrap",
-      "depends": ["jquery"]
+      "depends": [
+        "jquery"
+      ]
     }
   },
   "browserify": {
-    "transform": [ "browserify-shim" ]
+    "transform": [
+      "jadeify",
+      "browserify-shim"
+    ]
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

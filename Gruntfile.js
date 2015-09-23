@@ -12,26 +12,26 @@ module.exports = function(grunt) {
           collapseWhitespace: true
         },
         files: {
-          'tmp/index.html': 'app/index.html'
+          'tmp/index.html': 'client/index.html'
         }
       },
     },
     cssmin: {
       build: {
-        src: ['node_modules/bootstrap/dist/css/bootstrap.css', 'app/**/*.css'],
-        dest: 'app/bundle.css'
+        src: ['node_modules/bootstrap/dist/css/bootstrap.css', 'client/stylesheets/*.css'],
+        dest: 'client/bundle.css'
       }
     },
     jshint: {
       options: {
         jshintrc: true
       },
-      files: ['Gruntfile.js', 'main.js', 'app/**/*.js']
+      files: ['Gruntfile.js', 'main.js', 'client/**/*.js', '!client/bundle.js']
     },
     browserify: {
       build: {
-        src: ['app/**/*.js', '!app/bundle.js'],
-        dest: 'app/bundle.js'
+        src: ['client/app.js'],
+        dest: 'client/bundle.js'
       }
     },
     uglify: {
@@ -39,13 +39,13 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'app/bundle.js',
+        src: 'client/bundle.js',
         dest: 'tmp/bundle.js'
       }
     },
     copy: {
       prebuild: {
-        src: 'app/bundle.css',
+        src: 'client/bundle.css',
         dest: 'tmp/bundle.css'
       },
       build: {
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
       },
     },
     clean: {
-      css: ['app/bundle.css'],
+      css: ['client/bundle.css'],
       dist: ['dist'],
       tmp: ['tmp']
     }
