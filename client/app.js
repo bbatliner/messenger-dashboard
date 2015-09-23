@@ -18,6 +18,7 @@ app.extend({
     me: new Me(),
     people: new People(),
     router: new Router(),
+    root: location.pathname,
     // This is where it all starts
     init: function() {
         // Create and attach our main view
@@ -29,7 +30,7 @@ app.extend({
         // this kicks off our backbutton tracking (browser history)
         // and will cause the first matching handler in the router
         // to fire.
-        this.router.history.start({ pushState: true });
+        this.router.history.start({ pushState: false, root: this.root });
     },
     // This is a helper for navigating around the app.
     // this gets called by a global click handler that handles
@@ -37,6 +38,9 @@ app.extend({
     // it expects a url pathname for example: "/costello/settings"
     navigate: function(page) {
         var url = (page.charAt(0) === '/') ? page.slice(1) : page;
+        // Electron "hack":
+        // Remove a drive prefix, like 'C:/' or 'D:/', from a file loaded with 'file://'
+        url = url.substring(url.indexOf('/') + 1, url.length);
         this.router.history.navigate(url, {
             trigger: true
         });

@@ -17,7 +17,7 @@ module.exports = PageView.extend({
         this.renderWithTemplate();
         this.renderCollection(this.collection, PersonView, this.queryByHook('people-list'));
         if (!this.collection.length) {
-            this.fetchCollection();
+            this.addRandom();
         }
     },
     fetchCollection: function () {

@@ -10,6 +10,7 @@
     "ampersand-form-view": "^5.1.1",
     "ampersand-input-view": "^5.0.0",
     "ampersand-model": "^6.0.2",
+    "ampersand-rest-collection": "^5.0.0",
     "ampersand-router": "^3.0.2",
     "ampersand-view": "^8.0.1",
     "ampersand-view-switcher": "^2.0.0",
@@ -55,6 +56,7 @@
     ]
   },
   "scripts": {
+    "start": "grunt build && electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
