@@ -1,6 +1,8 @@
 'use strict';
 
-// Index/main js file.
-var myModule = require('./module');
+// Main entry point for browser application
 
-console.log(myModule());
+var $ = require('jquery');
+require('bootstrap');
+
+$('#email').popover({ content: 'I am popover text' });

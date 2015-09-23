@@ -5,18 +5,34 @@
   "main": "main.js",
   "dependencies": {
     "bootstrap": "^3.3.5",
-    "facebook-chat-api": "^0.2.11"
+    "facebook-chat-api": "^0.2.11",
+    "jquery": "^2.1.4"
   },
   "devDependencies": {
+    "browserify": "^11.1.0",
+    "browserify-shim": "^3.8.10",
     "electron-prebuilt": "^0.33.1",
     "grunt": "~0.4.5",
-    "grunt-browserify": "~4.0.1",
+    "grunt-browserify": "^4.0.1",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-copy": "~0.8.1",
     "grunt-contrib-cssmin": "~0.14.0",
     "grunt-contrib-htmlmin": "^0.4.0",
     "grunt-contrib-jshint": "~0.11.3",
     "grunt-contrib-uglify": "~0.9.2"
+  },
+  "browser": {
+    "jquery": "./node_modules/jquery/dist/jquery.min.js"
+  },
+  "browserify-shim": {
+    "jquery": "jQuery",
+    "./node_modules/bootstrap/dist/js/bootstrap.min.js": {
+      "exports": "bootstrap",
+      "depends": ["jquery"]
+    }
+  },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

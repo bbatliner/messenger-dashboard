@@ -30,7 +30,7 @@ module.exports = function(grunt) {
     },
     browserify: {
       build: {
-        src: ['node_modules/bootstrap/js/*.js', 'app/**/*.js', '!app/bundle.js'],
+        src: ['app/**/*.js', '!app/bundle.js'],
         dest: 'app/bundle.js'
       }
     },
@@ -65,9 +65,9 @@ module.exports = function(grunt) {
   });
 
   // Load plugins
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
