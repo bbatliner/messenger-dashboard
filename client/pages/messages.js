@@ -14,6 +14,12 @@ module.exports = PageView.extend({
 
     render: function () {
         this.renderWithTemplate();
+
+        // Fetch a thread's messages when a new thread is added
+        this.collection.on('add', function (thread) {
+            thread.messages.fetch();
+        });
+
         if (!this.collection.length) {
             this.collection.fetch();
         }
