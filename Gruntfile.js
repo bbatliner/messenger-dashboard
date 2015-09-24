@@ -26,7 +26,7 @@ module.exports = function(grunt) {
       options: {
         jshintrc: true
       },
-      files: ['Gruntfile.js', 'main.js', 'client/**/*.js', '!client/bundle.js']
+      files: ['Gruntfile.js', 'main.js', 'chat-api.js', 'client/**/*.js', '!client/bundle.js']
     },
     browserify: {
       build: {

@@ -16,7 +16,7 @@ module.exports = AmpersandCollection.extend({
         ipc.on('facebook-fetch-messages-success', function (threadId, messages) {
             // Check the threadId contained in the response to make sure these messages belong to this thread
             if (this.parent.thread_fbid === threadId) {
-                this.add(messages);
+                this.add(messages, {merge:true});
             }
         }.bind(this));
     }

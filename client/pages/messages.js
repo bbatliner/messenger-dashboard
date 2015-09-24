@@ -1,8 +1,7 @@
 'use strict';
 
 var PageView = require('./base');
-// var Thread = require('../models/thread');
-// var ThreadCollection = require('../models/thread-collection');
+var ThreadView = require('../views/thread');
 
 
 module.exports = PageView.extend({
@@ -13,7 +12,9 @@ module.exports = PageView.extend({
     },
 
     render: function () {
-        this.renderWithTemplate();
+        this.renderWithTemplate(this);
+
+        this.renderCollection(this.collection, ThreadView, this.queryByHook('thread-list'));
 
         // Fetch a thread's messages when a new thread is added
         this.collection.on('add', function (thread) {
