@@ -62,16 +62,17 @@ module.exports = function () {
     // ==============
     // FETCH MESSAGES
     // ==============
-    ipc.on('facebook-fetch-messages', function (threadId) {
+    ipc.on('facebook-fetch-messages', function (threadId, isGroup) {
         if (api === null) {
             return ipc.send('facebook-fetch-messages-error', 'Please log in to Facebook to use the chat API.');
         }
 
-        api.getMessages(threadId, 0, 20, function (err, messages) {
+        api.getMessages(threadId, isGroup, 0, 20, function (err, messages) {
             if (err) {
                 return ipc.send('facebook-fetch-messages-error', err);
             }
-            ipc.send('facebook-fetch-messages-success', threads);
+            // Send back the threadId so the other process can identify if this event is responding to its message
+            ipc.send('facebook-fetch-messages-success', threadId, messages);
         })
     })
 };

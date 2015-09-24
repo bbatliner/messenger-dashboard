@@ -39,6 +39,15 @@ module.exports = AmpersandState.extend({
         has_email_participant: ['boolean', true, false],
         read_only: ['boolean', true, false]
     },
+    derived: {
+        isGroupChat: {
+            deps: ['participants'],
+            cache: true,
+            fn: function () {
+                return this.participants.length > 2;
+            }
+        },
+    },
     collections: {
         messages: MessageCollection
     }
