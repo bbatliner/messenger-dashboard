@@ -12,6 +12,7 @@
     "ampersand-model": "^6.0.2",
     "ampersand-rest-collection": "^5.0.0",
     "ampersand-router": "^3.0.2",
+    "ampersand-state": "^4.6.0",
     "ampersand-view": "^8.0.1",
     "ampersand-view-switcher": "^2.0.0",
     "bootstrap": "^3.3.5",

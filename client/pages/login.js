@@ -17,7 +17,7 @@ module.exports = PageView.extend({
         var password = this.queryByHook('password').value;
         ipc.send('facebook-login', email, password);
         ipc.on('facebook-login-error', function (err) {
-            console.err(err);
+            console.error(err);
         });
         ipc.on('facebook-login-success', function (firstName, lastName) {
             this.model.firstName = firstName;

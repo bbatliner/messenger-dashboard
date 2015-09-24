@@ -28,7 +28,8 @@ module.exports = Router.extend({
             return this.redirectTo('login');
         }
         app.trigger('page', new MessagesPage({
-            model: app.me
+            model: app.me,
+            collection: app.me.threads
         }));
     },
 

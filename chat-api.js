@@ -11,6 +11,9 @@ var api = null; // API object returned on log in
 
 module.exports = function () {
 
+    // =====
+    // LOGIN
+    // =====
     function afterLogin() {
         var userId = api.getCurrentUserId();
         api.getUserInfo(userId, function (err, ret) {
@@ -39,4 +42,36 @@ module.exports = function () {
             afterLogin();
         });
     });
+
+    // =============
+    // FETCH THREADS
+    // =============
+    ipc.on('facebook-fetch-threads', function () {
+        if (api === null) {
+            return ipc.send('facebook-fetch-threads-error', 'Please log in to Facebook to use the chat API.');
+        }
+
+        api.getThreadList(0, 10, function (err, threads) {
+            if (err) {
+                return ipc.send('facebook-fetch-threads-error', err);
+            }
+            ipc.send('facebook-fetch-threads-success', threads);
+        });
+    });
+
+    // ==============
+    // FETCH MESSAGES
+    // ==============
+    ipc.on('facebook-fetch-messages', function (threadId) {
+        if (api === null) {
+            return ipc.send('facebook-fetch-messages-error', 'Please log in to Facebook to use the chat API.');
+        }
+
+        api.getMessages(threadId, 0, 20, function (err, messages) {
+            if (err) {
+                return ipc.send('facebook-fetch-messages-error', err);
+            }
+            ipc.send('facebook-fetch-messages-success', threads);
+        })
+    })
 };

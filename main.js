@@ -26,10 +26,10 @@ app.on('ready', function() {
     mainWindow = new BrowserWindow({width: 1200, height: 900, 'auto-hide-menu-bar': true});
 
     // and load the index.html of the app.
-    mainWindow.loadUrl('file://' + __dirname + '/dist/index.html');
+    mainWindow.loadUrl('file://' + __dirname + '/client/index.html');
 
     // Open the DevTools.
-    // mainWindow.openDevTools();
+    mainWindow.openDevTools();
 
     // Register IPC event handlers
     require('./chat-api')();
@@ -42,14 +42,3 @@ app.on('ready', function() {
         mainWindow = null;
     });
 });
-
-// var login = require('facebook-chat-api');
-
-// // Create simple echo bot
-// login({email: 'EMAIL', password: 'PASSWORD'}, function callback (err, api) {
-//     if(err) return console.error(err);
-
-//     api.listen(function callback(err, message) {
-//         api.sendMessage(message.body.toUpperCase(), message.thread_id);
-//     });
-// });
