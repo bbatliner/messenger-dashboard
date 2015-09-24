@@ -17,6 +17,7 @@
     "bootstrap": "^3.3.5",
     "domify": "^1.4.0",
     "domready": "^1.0.8",
+    "electron-safe-ipc": "^0.6.1",
     "facebook-chat-api": "^0.2.11",
     "jquery": "^2.1.4",
     "local-links": "^1.4.0",

@@ -6,7 +6,6 @@ var _ = require('lodash');
 var Router = require('./router');
 var MainView = require('./views/main');
 var Me = require('./models/me');
-var People = require('./models/persons');
 var domReady = require('domready');
 
 // attach our app to `window` so we can
@@ -16,7 +15,6 @@ window.app = app;
 // Extends our main app singleton
 app.extend({
     me: new Me(),
-    people: new People(),
     router: new Router(),
     root: location.pathname,
     // This is where it all starts
@@ -27,9 +25,8 @@ app.extend({
             el: document.body
         });
 
-        // this kicks off our backbutton tracking (browser history)
-        // and will cause the first matching handler in the router
-        // to fire.
+        // this kicks off our hash based routing (location or slash based routing doesn't work in Electron/file://)
+        // and causes the first matching handler in the router to fire.
         this.router.history.start({ pushState: false, root: this.root });
     },
     // This is a helper for navigating around the app.
