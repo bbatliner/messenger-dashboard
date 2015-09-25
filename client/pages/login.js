@@ -12,9 +12,7 @@ module.exports = PageView.extend({
         'click [data-hook=login]': 'handleLoginClick'
     },
 
-    render: function () {
-        this.renderWithTemplate(this);
-
+    initialize: function () {
         ipc.removeAllListeners(app.ipc.facebookLoginSuccess);
         ipc.on(app.ipc.facebookLoginSuccess, function (id, firstName, lastName) {
             this.model.id = id;
@@ -23,8 +21,6 @@ module.exports = PageView.extend({
             this.model.threads = new ThreadCollection();
             app.navigate('messages');
         }.bind(this));
-
-        return this;
     },
 
     handleLoginClick: function (e) {

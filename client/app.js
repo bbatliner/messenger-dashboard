@@ -29,7 +29,7 @@ app.extend({
 
         // this kicks off our hash based routing (location or slash based routing doesn't work in Electron/file://)
         // and causes the first matching handler in the router to fire.
-        this.router.history.start({ pushState: false, root: this.root });  
+        this.router.history.start({ pushState: false, root: this.root });
     },
     // This is a helper for navigating around the app.
     // this gets called by a global click handler that handles
