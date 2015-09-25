@@ -3,37 +3,37 @@
 var app = require('ampersand-app');
 var Router = require('ampersand-router');
 var LoginPage = require('./pages/login');
-var MessagesPage = require('./pages/messages');
+var ChatPage = require('./pages/chat');
 
 
 module.exports = Router.extend({
     routes: {
         'login': 'login',
-        'messages': 'messages',
+        'chat': 'chat',
         '(*path)': 'catchAll'
     },
 
     // ------- ROUTE HANDLERS ---------
     login: function () {
         if (app.me.isLoggedIn) {
-            return this.redirectTo('messages');
+            return this.redirectTo('chat');
         }
         app.trigger('page', new LoginPage({
             model: app.me
         }));
     },
 
-    messages: function () {
+    chat: function () {
         if (!app.me.isLoggedIn) {
             return this.redirectTo('login');
         }
-        app.trigger('page', new MessagesPage({
+        app.trigger('page', new ChatPage({
             model: app.me,
             collection: app.me.threads
         }));
     },
 
     catchAll: function () {
-        this.redirectTo('messages');
+        this.redirectTo('chat');
     }
 });
