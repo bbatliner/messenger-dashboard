@@ -1,5 +1,6 @@
 'use strict';
 
+var app = require('ampersand-app');
 var View = require('ampersand-view');
 var Message = require('../models/message');
 var MessageView = require('./message');
@@ -22,28 +23,43 @@ module.exports = View.extend({
 
         this.renderCollection(this.model.messages, MessageView, this.queryByHook('message-list'));
 
+        var bumpThread = function () {
+            this.model.timestamp = Date.now();
+            this.model.collection.sort();
+        }.bind(this);
+
+        // Create thread-specific IPC channels
+        var messageReceived = app.ipc.facebookMessageReceived + '-' + this.model.thread_fbid;
+        var messageSent = app.ipc.facebookSendMessage + '-' + this.model.thread_fbid;
+
         // Add new messages received to this thread, if they belong
-        ipc.on('facebook-message-received', function (message) {
+        ipc.removeAllListeners(messageReceived);
+        ipc.on(messageReceived, function (message) {
+            // Transform data
             message.thread_id = message.thread_id.toString();
-            if (message.thread_id === this.model.thread_fbid) {
-                this.model.messages.add(message);
-            }
+            message.author = message.sender_name;
+            message.timestamp = Date.now();
+            this.model.messages.add(message);
+            bumpThread();         
+        }.bind(this));
+
+        // Add sent messages (your own replies) to this thread
+        ipc.removeAllListeners(messageSent);
+        ipc.on(messageSent, function () {
+            // Create new message with basic info
+            var newMessage = new Message({
+                author: app.me.fullName,
+                body: this.queryByHook('reply').value,
+                timestamp: Date.now()
+            });
+            this.model.messages.add(newMessage);
+            bumpThread();
+            this.queryByHook('reply').value = '';
         }.bind(this));
     },
 
     handleSendReplyClick: function () {
         var message = this.queryByHook('reply').value;
-        ipc.send('facebook-send-message', message, this.model.thread_fbid);
-        ipc.on('facebook-send-message-error', function (err) {
-            console.error(err);
-        });
-        ipc.on('facebook-send-message-success', function () {
-            this.queryByHook('reply').value = '';
-            var newMessage = new Message({
-                body: message,
-                timestamp: Date.now()
-            });
-            this.model.messages.add(newMessage);
-        }.bind(this));
+        ipc.send(app.ipc.facebookSendMessage, message, this.model.thread_fbid);
     }
 });

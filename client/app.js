@@ -2,11 +2,13 @@
 
 var app = require('ampersand-app');
 var _ = require('lodash');
-// var config = require('clientconfig');
 var Router = require('./router');
 var MainView = require('./views/main');
 var Me = require('./models/me');
 var domReady = require('domready');
+
+// Define some constants for IPC channels
+app.ipc = require('../ipc-channels');
 
 // attach our app to `window` so we can
 // easily access it from the console.
@@ -27,7 +29,7 @@ app.extend({
 
         // this kicks off our hash based routing (location or slash based routing doesn't work in Electron/file://)
         // and causes the first matching handler in the router to fire.
-        this.router.history.start({ pushState: false, root: this.root });
+        this.router.history.start({ pushState: false, root: this.root });  
     },
     // This is a helper for navigating around the app.
     // this gets called by a global click handler that handles

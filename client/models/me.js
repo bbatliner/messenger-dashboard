@@ -1,12 +1,12 @@
 'use strict';
 
 var AmpersandModel = require('ampersand-model');
-var ThreadCollection = require('./thread-collection');
 
 
 module.exports = AmpersandModel.extend({
     type: 'user',
     props: {
+        id: ['string', false, ''],
         firstName: ['string', false, ''],
         lastName: ['string', false, '']
     },
@@ -15,7 +15,7 @@ module.exports = AmpersandModel.extend({
             deps: ['firstName', 'lastName'],
             cache: false,
             fn: function () {
-                return !!(this.firstName || this.lastName);
+                return !!this.id;
             }
         },
         fullName: {
@@ -25,8 +25,5 @@ module.exports = AmpersandModel.extend({
                 return this.firstName + ' ' + this.lastName;
             }
         }
-    },
-    collections: {
-        threads: ThreadCollection
     }
 });

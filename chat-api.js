@@ -6,6 +6,7 @@
 
 var login = require('facebook-chat-api');
 var ipc = require('electron-safe-ipc/host'); // Module for inter-process communication
+var ipcChannels = require('./ipc-channels');
 
 var api = null; // API object returned on log in
 
@@ -18,15 +19,15 @@ module.exports = function () {
         var userId = api.getCurrentUserId();
         api.getUserInfo(userId, function (err, ret) {
             if (err) {
-                return ipc.send('facebook-login-error', err);
+                return ipc.send(ipcChannels.facebookLoginError, err.toString());
             }
             var userInfo = ret[userId];
             var names = userInfo.name.split(' ');
-            return ipc.send('facebook-login-success', names[0], names[1]);
+            ipc.send(ipcChannels.facebookLoginSuccess, userId, names[0], names[1]);
         });
     }
 
-    ipc.on('facebook-login', function (username, password) {
+    ipc.on(ipcChannels.facebookLogin, function (username, password) {
         // If already logged in, send back the logged in user
         if (api !== null) {
             return afterLogin();
@@ -34,7 +35,7 @@ module.exports = function () {
         login({email: username, password: password}, function (err, tmpApi) {
             if (err) {
                 console.error(err);
-                return ipc.send('facebook-login-error', err);
+                return ipc.send(ipcChannels.facebookLoginError, err.toString());
             }
             // Store the api for future use
             api = tmpApi;
@@ -48,7 +49,7 @@ module.exports = function () {
                 if (err) {
                     return console.error(err);
                 }
-                ipc.send('facebook-message-received', message);
+                ipc.send(ipcChannels.facebookMessageReceived + '-' + message.thread_id, message);
             });
         });
     });
@@ -56,30 +57,30 @@ module.exports = function () {
     // ============
     // SEND MESSAGE
     // ============
-    ipc.on('facebook-send-message', function (message, threadId) {
+    ipc.on(ipcChannels.facebookSendMessage, function (message, threadId) {
         if (api === null) {
-            return ipc.send('facebook-send-message-error', 'Please log in to Facebook to use the chat API.');
+            return ipc.send(ipcChannels.facebookSendMessageError, 'Please log in to Facebook to use the chat API.');
         }
 
-        api.sendMessage(message, threadId, function (err, id) {
+        api.sendMessage(message, threadId, function (err) {
             if (err) {
-                return ipc.send('facebook-send-message-error', err);
+                return ipc.send(ipcChannels.facebookSendMessageError, err.toString());
             }
-            ipc.send('facebook-send-message-success', id);
+            ipc.send(ipcChannels.facebookSendMessage + '-' + threadId);
         });
     });
 
     // =============
     // FETCH THREADS
     // =============
-    ipc.on('facebook-fetch-threads', function () {
+    ipc.on(ipcChannels.facebookFetchThreads, function (userId) {
         if (api === null) {
-            return ipc.send('facebook-fetch-threads-error', 'Please log in to Facebook to use the chat API.');
+            return ipc.send(ipcChannels.facebookFetchThreadsError, 'Please log in to Facebook to use the chat API.');
         }
 
         api.getThreadList(0, 10, function (err, threads) {
             if (err) {
-                return ipc.send('facebook-fetch-threads-error', err);
+                return ipc.send(ipcChannels.facebookFetchThreadsError, err.toString());
             }
             threads.forEach(function (thread) {
                 // If this conversation is only between two people
@@ -87,14 +88,14 @@ module.exports = function () {
                     // Find the name of the other person and attach it to the thread object
                     api.getUserInfo(thread.other_user_fbid, function (err, ret) {
                         if (err) {
-                            return ipc.send('facebook-fetch-threads-error', err);
+                            return ipc.send(ipcChannels.facebookFetchThreadsError, err.toString());
                         }
                         var info = ret[thread.other_user_fbid];
                         thread.name = info.name;
-                        ipc.send('facebook-fetch-threads-success', [thread]);
+                        ipc.send(ipcChannels.facebookFetchThreads + '-' + userId, [thread]);
                     });
                 } else {
-                    ipc.send('facebook-fetch-threads-success', [thread]);
+                    ipc.send(ipcChannels.facebookFetchThreads + '-' + userId, [thread]);
                 }
             });
             
@@ -104,17 +105,31 @@ module.exports = function () {
     // ==============
     // FETCH MESSAGES
     // ==============
-    ipc.on('facebook-fetch-messages', function (threadId, isGroup) {
+    ipc.on(ipcChannels.facebookFetchMessages, function (threadId, isGroup) {
         if (api === null) {
-            return ipc.send('facebook-fetch-messages-error', 'Please log in to Facebook to use the chat API.');
+            return ipc.send(ipcChannels.facebookFetchMessagesError, 'Please log in to Facebook to use the chat API.');
         }
-
+        
         api.getMessages(threadId, isGroup, 0, 20, function (err, messages) {
             if (err) {
-                return ipc.send('facebook-fetch-messages-error', err);
+                return ipc.send(ipcChannels.facebookFetchMessagesError, err.toString());
             }
-            // Send back the threadId so the other process can identify if this event is responding to its message
-            ipc.send('facebook-fetch-messages-success', threadId, messages);
+            messages.forEach(function (message) {
+                if (message.author.startsWith('fbid:')) {
+                    var authorId = message.author.substring(5);
+                    api.getUserInfo(authorId, function (err, ret) {
+                        if (err) {
+                            return ipc.send(ipcChannels.facebookFetchMessagesError, err.toString());
+                        }
+                        var info = ret[authorId];
+                        message.author = info.name;
+                        ipc.send(ipcChannels.facebookFetchMessages + '-' + threadId, [message]);
+                    });
+                } else {
+                    // Send back the threadId so the other process can identify if this event is responding to its message
+                    ipc.send(ipcChannels.facebookFetchMessages + '-' + threadId, [message]);
+                }
+            });
         });
     });
 };

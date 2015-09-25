@@ -7,6 +7,7 @@ var View = require('ampersand-view');
 var dom = require('ampersand-dom');
 var ViewSwitcher = require('ampersand-view-switcher');
 var localLinks = require('local-links');
+var ipc = require('electron-safe-ipc/guest');
 
 
 module.exports = View.extend({
@@ -15,6 +16,21 @@ module.exports = View.extend({
     initialize: function () {
         // this marks the correct nav item selected
         this.listenTo(app, 'page', this.handleNewPage);
+
+        // TODO: Should this be here or in app.js?
+        // Set up error handling
+        ipc.on(app.ipc.facebookLoginError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookFetchMessagesError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookFetchThreadsError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookSendMessageError, function (err) {
+            console.error(err);
+        });
     },
     events: {
         'click a[href]': 'handleLinkClick'
