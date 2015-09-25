@@ -3,7 +3,6 @@
 var app = require('ampersand-app');
 var PageView = require('./base');
 var ipc = require('electron-safe-ipc/guest');
-var ThreadCollection = require('../models/thread-collection');
 
 module.exports = PageView.extend({
     template: require('../templates/pages/login.jade')(),
@@ -12,21 +11,16 @@ module.exports = PageView.extend({
         'click [data-hook=login]': 'handleLoginClick'
     },
 
-    initialize: function () {
-        ipc.removeAllListeners(app.ipc.facebookLoginSuccess);
-        ipc.on(app.ipc.facebookLoginSuccess, function (id, firstName, lastName) {
-            this.model.id = id;
-            this.model.firstName = firstName;
-            this.model.lastName = lastName;
-            this.model.threads = new ThreadCollection();
-            app.navigate('messages');
-        }.bind(this));
-    },
-
     handleLoginClick: function (e) {
         e.preventDefault();
         var email = this.queryByHook('email').value;
         var password = this.queryByHook('password').value;
-        ipc.send(app.ipc.facebookLogin, email, password);        
+        ipc.request(app.ipc.facebookLogin, email, password)
+            .then(function (user) {
+                this.model.id = user.id;
+                this.model.firstName = user.firstName;
+                this.model.lastName = user.lastName;
+                app.navigate('messages');
+            }.bind(this));       
     }
 });

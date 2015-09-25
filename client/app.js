@@ -7,6 +7,9 @@ var MainView = require('./views/main');
 var Me = require('./models/me');
 var domReady = require('domready');
 
+// Polyfill promises
+require('es6-promise').polyfill();
+
 // Define some constants for IPC channels
 app.ipc = require('../ipc-channels');
 

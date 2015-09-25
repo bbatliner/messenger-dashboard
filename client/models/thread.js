@@ -1,6 +1,7 @@
 'use strict';
 
 var AmpersandState = require('ampersand-state');
+var MessageCollection = require('./message-collection');
 
 
 module.exports = AmpersandState.extend({
@@ -45,5 +46,8 @@ module.exports = AmpersandState.extend({
                 return this.participants.length > 2;
             }
         },
+    },
+    collections: {
+        messages: MessageCollection
     }
 });

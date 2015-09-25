@@ -6,6 +6,9 @@ var BrowserWindow = require('browser-window');  // Module to create native brows
 // Report crashes to our server.
 require('crash-reporter').start();
 
+// Polyfill promises
+require('es6-promise').polyfill();
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
