@@ -16,6 +16,23 @@ module.exports = function(grunt) {
         }
       },
     },
+    less: {
+      build: {
+        options: {
+          paths: ['client/stylesheets/**'],
+          plugins: [
+            new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]})
+          ],
+        },
+        files: [{
+          expand: true,
+          cwd: 'client/stylesheets',
+          src: ['**/*.less'],
+          dest: 'client/stylesheets/',
+          ext: '.css'
+        }]
+      }
+    },
     cssmin: {
       build: {
         src: ['node_modules/bootstrap/dist/css/bootstrap.css', 'client/stylesheets/*.css'],
@@ -68,11 +85,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Define build task
-  grunt.registerTask('build', ['jshint', 'clean:tmp', 'browserify', 'uglify', 'htmlmin', 'clean:css', 'cssmin', 'clean:dist', 'copy', 'clean:tmp']);
+  grunt.registerTask('build', ['jshint', 'clean:tmp', 'browserify', 'uglify', 'htmlmin', 'clean:css', 'less', 'cssmin', 'clean:dist', 'copy', 'clean:tmp']);
 };

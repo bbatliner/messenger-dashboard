@@ -18,6 +18,7 @@
     "electron-safe-ipc": "^0.6.1",
     "facebook-chat-api": "^0.2.11",
     "jquery": "^2.1.4",
+    "less-plugin-autoprefix": "^1.5.1",
     "local-links": "^1.4.0",
     "lodash": "^3.10.1"
   },
@@ -32,6 +33,7 @@
     "grunt-contrib-cssmin": "~0.14.0",
     "grunt-contrib-htmlmin": "^0.4.0",
     "grunt-contrib-jshint": "~0.11.3",
+    "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-uglify": "~0.9.2",
     "jade": "^1.11.0",
     "jadeify": "^4.4.0"
