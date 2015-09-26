@@ -16,7 +16,7 @@
 @BodyFont: @NotoSans;
 
 .BodyFont(@color: white, @size: 1.5em){
-	font-family: @BodyFont;
+	font-family: @NotoSans;
 	color: @color;
 	font-size: @size;
 	line-height: @size + 0.5em;
@@ -26,9 +26,20 @@
 /*---> LAYOUT <-------------------------------*/
 /*--------------------------------------------*/
 
+html{
+
+}
+
 body {
 	background: url('stylesheets/img/lightBlue.png');
-	.BodyFont();
+}
+
+nav{
+
+	div.container-fluid{
+		.BodyFont();	
+	}
+	
 }
 
 /*--------------------------------------------*/
@@ -46,6 +57,7 @@ input{
 	margin: 1em 0;
 	background: transparent;
 	transition: all 0.5s;
+	.BodyFont();
 }
 
 input:focus{
