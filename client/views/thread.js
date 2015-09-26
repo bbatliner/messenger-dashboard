@@ -15,7 +15,8 @@ module.exports = View.extend({
     },
 
     events: {
-        'click [data-hook=send-reply]': 'handleSendReplyClick'
+        'click [data-hook=send-reply]': 'handleSendReplyClick',
+        'click [data-hook=refresh]': 'handleRefreshClick'
     },
 
     render: function () {
@@ -62,6 +63,10 @@ module.exports = View.extend({
     handleSendReplyClick: function () {
         var message = this.queryByHook('reply').value;
         ipc.send(app.ipc.facebookSendMessage, message, this.model.thread_fbid);
+    },
+
+    handleRefreshClick: function () {
+        this.model.messages.fetch();
     },
 
     bump: function () {

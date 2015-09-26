@@ -2,6 +2,7 @@
 
 var PageView = require('./base');
 var ThreadView = require('../views/thread');
+var AddThreadView = require('../views/add-thread');
 
 
 module.exports = PageView.extend({
@@ -19,6 +20,10 @@ module.exports = PageView.extend({
         if (!this.collection.length) {
             this.collection.fetch();
         }
+
+        this.renderSubview(new AddThreadView({
+            model: this.model
+        }), this.queryByHook('add-new-thread'));
 
         return this;
     }

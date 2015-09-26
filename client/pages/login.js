@@ -16,8 +16,8 @@ module.exports = PageView.extend({
         ipc.removeAllListeners(app.ipc.facebookLoginSuccess);
         ipc.on(app.ipc.facebookLoginSuccess, function (user) {
             this.model.id = user.id;
-            this.model.firstName = user.firstName;
-            this.model.lastName = user.lastName;
+            this.model.firstName = user.name.split(' ')[0];
+            this.model.lastName = user.name.split(' ')[1];
             this.model.threads = new ThreadCollection();
             app.navigate('messages');
         }.bind(this));

@@ -1,3 +1,16 @@
 body {
   background: #fff;
 }
+
+.mark, mark {
+    padding: 0;
+}
+
+div.awesomplete {
+    li[aria-selected=true] {
+        background-color: #3a5795;
+    }
+    li[aria-selected=false] mark, li[aria-selected=true] mark {
+        background: inherit;
+    }
+}
