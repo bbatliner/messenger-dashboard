@@ -69,6 +69,14 @@ div.container {
   padding: 1em 2em;
   background: rgba(255, 255, 255, 0.35);
 }
+/* Custom awesomplete colors */
+div.awesomplete li[aria-selected=true] {
+  background-color: #3a5795;
+}
+div.awesomplete li[aria-selected=false] mark,
+div.awesomplete li[aria-selected=true] mark {
+  background: inherit;
+}
 /*--------------------------------------------*/
 /*---> FORMS <--------------------------------*/
 /*--------------------------------------------*/
@@ -134,15 +142,4 @@ button:active {
   to {
     opacity: 1.0;
   }
-}
-.mark,
-mark {
-  padding: 0;
-}
-div.awesomplete li[aria-selected=true] {
-  background-color: #3a5795;
-}
-div.awesomplete li[aria-selected=false] mark,
-div.awesomplete li[aria-selected=true] mark {
-  background: inherit;
 }

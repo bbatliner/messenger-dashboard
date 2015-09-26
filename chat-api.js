@@ -69,6 +69,7 @@ module.exports = function () {
                 if (err) {
                     return console.error(err);
                 }
+                message.threadID = message.threadID.toString();
                 ipc.send(ipcChannels.facebookMessageReceived + '-' + message.threadID, message);
             });
         });

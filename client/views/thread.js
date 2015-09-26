@@ -46,7 +46,7 @@ module.exports = View.extend({
                 senderName: app.me.fullName,
                 senderID: app.me.id,
                 messageID: messageInfo.messageID,
-                threadID: messageInfo.threadID !== null ? messageInfo.threadID : '',
+                threadID: messageInfo.threadID !== null ? messageInfo.threadID : this.model.threadFbid,
                 body: this.queryByHook('reply').value
             });
             this.model.messages.add(newMessage);
