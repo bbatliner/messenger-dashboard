@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     },
     cssmin: {
       build: {
-        src: ['client/stylesheets/*.css'],
+        src: ['node_modules/awesomplete/awesomplete.css', 'client/stylesheets/*.css'],
         dest: 'client/bundle.css'
       }
     },

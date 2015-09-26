@@ -15,7 +15,8 @@ module.exports = View.extend({
     },
 
     events: {
-        'click [data-hook=send-reply]': 'handleSendReplyClick'
+        'click [data-hook=send-reply]': 'handleSendReplyClick',
+        'click [data-hook=refresh]': 'handleRefreshClick'
     },
 
     render: function () {
@@ -27,29 +28,26 @@ module.exports = View.extend({
             this.model.messages.fetch();
         }
 
-        // TODO: Should this be moved up to 'main' or 'app', and it should then add the message to the appropriate thread?
         // Thread specific message received channel
-        var messageReceived = app.ipc.facebookMessageReceived + '-' + this.model.thread_fbid;
-        var sentMessage = app.ipc.facebookSendMessage + '-' + this.model.thread_fbid;
+        var messageReceived = app.ipc.facebookMessageReceived + '-' + this.model.threadFbid;
+        var sentMessage = app.ipc.facebookSendMessage + '-' + this.model.threadFbid;
 
         // Add new messages received to this thread, if they belong
         ipc.removeAllListeners(messageReceived);
         ipc.on(messageReceived, function (message) {
-            // Transform data
-            message.thread_id = message.thread_id.toString();
-            message.author = message.sender_name;
-            message.timestamp = Date.now();
             this.model.messages.add(message);
             this.bump();         
         }.bind(this));
 
         ipc.removeAllListeners(sentMessage);
-        ipc.on(sentMessage, function () {
+        ipc.on(sentMessage, function (messageInfo) {
             // Create new message with basic info
             var newMessage = new Message({
-                author: app.me.fullName,
-                body: this.queryByHook('reply').value,
-                timestamp: Date.now()
+                senderName: app.me.fullName,
+                senderID: app.me.id,
+                messageID: messageInfo.messageID,
+                threadID: messageInfo.threadID !== null ? messageInfo.threadID : '',
+                body: this.queryByHook('reply').value
             });
             this.model.messages.add(newMessage);
             this.bump();
@@ -61,7 +59,11 @@ module.exports = View.extend({
 
     handleSendReplyClick: function () {
         var message = this.queryByHook('reply').value;
-        ipc.send(app.ipc.facebookSendMessage, message, this.model.thread_fbid);
+        ipc.send(app.ipc.facebookSendMessage, message, this.model.threadFbid);
+    },
+
+    handleRefreshClick: function () {
+        this.model.messages.fetch();
     },
 
     bump: function () {

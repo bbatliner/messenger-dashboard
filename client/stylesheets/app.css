@@ -135,3 +135,14 @@ button:active {
     opacity: 1.0;
   }
 }
+.mark,
+mark {
+  padding: 0;
+}
+div.awesomplete li[aria-selected=true] {
+  background-color: #3a5795;
+}
+div.awesomplete li[aria-selected=false] mark,
+div.awesomplete li[aria-selected=true] mark {
+  background: inherit;
+}

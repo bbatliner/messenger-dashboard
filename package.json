@@ -12,6 +12,7 @@
     "ampersand-state": "^4.6.0",
     "ampersand-view": "^8.0.1",
     "ampersand-view-switcher": "^2.0.0",
+    "awesomplete": "^1.0.0",
     "bootstrap": "^3.3.5",
     "domify": "^1.4.0",
     "domready": "^1.0.8",
@@ -49,6 +50,9 @@
       "depends": [
         "jquery"
       ]
+    },
+    "./node_modules/awesomplete/awesomplete.min.js": {
+      "exports": "awesomplete"
     }
   },
   "browserify": {

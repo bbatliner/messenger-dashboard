@@ -7,6 +7,6 @@ module.exports = View.extend({
     template: require('../templates/includes/message.jade')(),
     bindings: {
         'model.body': '[data-hook=body]',
-        'model.author': '[data-hook=author]'
+        'model.senderName': '[data-hook=sender]'
     }
 });

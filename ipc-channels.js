@@ -6,7 +6,8 @@ var channels = {
     facebookSendMessage: 'facebook-send-message',
     facebookMessageReceived: 'facebook-message-received',
     facebookFetchThreads: 'facebook-fetch-threads',
-    facebookFetchMessages: 'facebook-fetch-messages'
+    facebookFetchMessages: 'facebook-fetch-messages',
+    facebookSearchThreads: 'facebook-search-threads'
 };
 
 // Add corresponding '-error' channels for each action
@@ -21,5 +22,8 @@ for (var channel in channels) {
 channels.facebookLoginSuccess = channels.facebookLogin + '-success';
 // Same with fetching threads
 channels.facebookFetchThreadsSuccess = channels.facebookFetchThreads + '-success';
+
+// Generic auth error (api === null)
+channels.facebookAuthError = 'facebook-auth-error';
 
 module.exports = channels;
