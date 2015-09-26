@@ -1,12 +1,15 @@
 body {
   background: url('stylesheets/img/lightBlue.png');
-  color: #fff;
+  color: white;
 }
 input {
   outline: none;
   border: none;
   border-radius: 0;
-  background: orange;
   margin: 1em 0;
-  background: purple;
+  background: transparent;
+  transition: all 0.5s;
+}
+input:focus {
+  background: white;
 }

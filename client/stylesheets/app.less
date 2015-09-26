@@ -1,7 +1,39 @@
+/*--------------------------------------------*/
+/*---> COLORS <-------------------------------*/
+/*--------------------------------------------*/
+
+// Colors from Tiled Background
+@lightTone: #017DD2;
+@focusTone: #0177CA;
+@darkTone: #0172C0;
+
+/*--------------------------------------------*/
+/*---> TEXT <---------------------------------*/
+/*--------------------------------------------*/
+
+// Import and Assign Google Fonts
+@NotoSans: 'Noto Sans', sans-serif;
+@BodyFont: @NotoSans;
+
+.BodyFont(@color: white, @size: 1.5em){
+	font-family: @BodyFont;
+	color: @color;
+	font-size: @size;
+	line-height: @size + 0.5em;
+}
+
+/*--------------------------------------------*/
+/*---> LAYOUT <-------------------------------*/
+/*--------------------------------------------*/
+
 body {
 	background: url('stylesheets/img/lightBlue.png');
-	color: white;
+	.BodyFont();
 }
+
+/*--------------------------------------------*/
+/*---> FORMS <--------------------------------*/
+/*--------------------------------------------*/
 
 .FormCleanse(){
 	outline: none;
