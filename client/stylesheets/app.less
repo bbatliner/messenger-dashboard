@@ -1,17 +1,21 @@
 body {
 	background: url('stylesheets/img/lightBlue.png');
-	color: #fff;
+	color: white;
 }
 
 .FormCleanse(){
 	outline: none;
 	border: none;
 	border-radius: 0;
-	background: orange;
 }
 
 input{
 	.FormCleanse();
 	margin: 1em 0;
-	background: purple;
+	background: transparent;
+	transition: all 0.5s;
+}
+
+input:focus{
+	background: white;
 }
