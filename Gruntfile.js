@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     },
     cssmin: {
       build: {
-        src: ['node_modules/bootstrap/dist/css/bootstrap.css', 'client/stylesheets/*.css'],
+        src: ['client/stylesheets/*.css'],
         dest: 'client/bundle.css'
       }
     },

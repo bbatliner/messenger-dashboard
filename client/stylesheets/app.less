@@ -1,3 +1,191 @@
+/*--------------------------------------------*/
+/*---> COLORS <-------------------------------*/
+/*--------------------------------------------*/
+
+// Colors from Blue Tiled Background
+/*@lightTone: #017DD2;
+@focusTone: #0177CA;
+@darkTone: #0172C0;*/
+
+// Dynamic Colors
+@focusTone: #47639E;
+@lightTone: @focusTone + #222222;
+@darkTone: @focusTone - #222222;
+
+/*--------------------------------------------*/
+/*---> TEXT <---------------------------------*/
+/*--------------------------------------------*/
+
+// Import and Assign Google Fonts
+@NotoSans: 'Noto Sans', sans-serif;
+@BodyFont: @NotoSans;
+
+.BodyFont(@color: white, @size: 1.0em){
+	font-family: @NotoSans;
+	color: @color;
+	font-size: @size;
+	line-height: @size + 0.25em;
+	padding: 0.25em 0;
+}
+
+/*
+Currently Not Working
+section.page.login{
+
+	div.container{
+		width: 26em;
+	}
+
+}*/
+
+div.container{
+
+	h1, h2, h3, p{
+		.BodyFont();
+		margin: 0.5em 0;
+	}
+
+	h1, h2, h3, h4{
+		font-weight: bold;
+		color: @darkTone;
+	}
+
+	h1{
+		font-size: 1.75em;
+	}
+
+	h2{
+		font-size: 1.5em;
+	}
+
+	p{
+		color: @darkTone;
+	}
+
+}
+
+/*--------------------------------------------*/
+/*---> LAYOUT <-------------------------------*/
+/*--------------------------------------------*/
+
+.Center(@textAlign: center){
+	margin: auto 0;
+	text-align: @textAlign;
+	//display: block;
+}
+
+html{
+	background: url('stylesheets/img/blurPhone1.jpg') no-repeat center center fixed;
+	background-size: cover;
+}
+
 body {
-  background: #fff;
+	//background: @focusTone url('stylesheets/img/transDiagmonds.png');
+}
+
+nav{
+
+	background: @focusTone url('stylesheets/img/transDiagmonds.png');
+
+	div.navbar-header{
+		.BodyFont(white, 1.5em);
+		padding: 0.5em;
+		margin-left: 1.5em;
+		font-weight: bolder;
+	}
+	
+}
+
+div.container{
+	width: 26em;
+	margin: 2em auto;
+	padding: 1em 2em;
+	background: rgba(255, 255, 255, 0.35);
+}
+
+/*--------------------------------------------*/
+/*---> FORMS <--------------------------------*/
+/*--------------------------------------------*/
+
+.FormCleanse(){
+	outline: none;
+	border: none;
+	border-radius: 0;
+}
+
+.PlaceHolder(@color: white) {
+	input::-webkit-input-placeholder { color: @color; }
+	input:-moz-placeholder { color: @color; }
+	textarea::-webkit-input-placeholder { color: @color; }
+	textarea:-moz-placeholder { color: @color; }
+}
+
+input, button{
+	.FormCleanse();
+	.Center();
+	display: block;
+	margin: 0.5em 0;
+	width: 100%;
+	height: 3em;
+	box-sizing: border-box;
+	// So apparently, padding is not a thing
+	.BodyFont();
+	background: transparent;
+	border: 0.25em solid @darkTone;
+	transition: all 0.5s;
+}
+
+input{
+	//.PlaceHolder(white);
+	color: @darkTone;
+}
+
+input:focus{
+	background: rgba(255, 255, 255, 0.75);
+	// Do not remove this, for some reason, text changes to white without it
+	color: @darkTone;
+}
+
+button{
+	width: 50%;
+	margin: auto auto;
+	border-radius: 0.75em;
+	background: transparent;
+	color: white;
+	// Based on tutorial from: stackoverflow.com/questions/17212094/fill-background-color-left-to-right-css
+	background: linear-gradient(to right, @darkTone 50%, white 50%);
+	background-size: 200% 100%;
+	background-position: left bottom;
+	transition: all 0.5s ease;
+}
+
+button:hover{
+	background-position: right bottom;
+	color: @darkTone;
+	font-weight: bolder;
+	border-radius: 1.5em;
+}
+
+button:active{
+	.OpacityPulse();
+}
+
+/*--------------------------------------------*/
+/*---> ANIMATIONS <---------------------------*/
+/*--------------------------------------------*/
+
+@-webkit-keyframes opacityPulse{
+	from{
+		opacity: 1.0;
+	}
+	50%{
+		opacity: 0.25;
+	}
+	to{
+		opacity: 1.0;
+	}
+}
+
+.OpacityPulse(){
+	animation: opacityPulse 0.5s linear infinite;
 }
