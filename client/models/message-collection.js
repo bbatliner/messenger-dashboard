@@ -11,17 +11,18 @@ module.exports = AmpersandCollection.extend({
     comparator: 'timestamp',
 
     initialize: function () {
-        var threadFetchMessage = app.ipc.facebookFetchMessages + '-' + this.parent.thread_fbid;
+        var threadFetchMessage = app.ipc.facebookFetchMessages + '-' + this.parent.threadFbid;
         ipc.removeAllListeners(threadFetchMessage);
         ipc.on(threadFetchMessage, function (messages) {
-            if (messages[0].thread_fbid === this.parent.thread_fbid) {
-                this.add(messages);
-            }
+            messages.forEach(function (message) { 
+                message.threadID = this.parent.threadFbid;
+            }.bind(this));
+            this.add(messages);
         }.bind(this));
     },
 
     fetch: function () {
         this.reset();
-        ipc.send(app.ipc.facebookFetchMessages, this.parent.thread_fbid, this.parent.isGroupChat);
+        ipc.send(app.ipc.facebookFetchMessages, this.parent.threadFbid);
     }
 });

@@ -19,6 +19,9 @@ module.exports = View.extend({
 
         // TODO: Should this be here or in app.js?
         // Set up error handling
+        ipc.on(app.ipc.facebookAuthErro, function (err) {
+            console.error(err);
+        });
         ipc.on(app.ipc.facebookLoginError, function (err) {
             console.error(err);
         });
@@ -29,6 +32,9 @@ module.exports = View.extend({
             console.error(err);
         });
         ipc.on(app.ipc.facebookSendMessageError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookFetchFriendsListError, function (err) {
             console.error(err);
         });
     },
