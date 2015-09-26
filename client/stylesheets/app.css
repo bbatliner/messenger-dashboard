@@ -7,6 +7,15 @@
 /*--------------------------------------------*/
 /*---> TEXT <---------------------------------*/
 /*--------------------------------------------*/
+/*
+Currently Not Working
+section.page.login{
+
+	div.container{
+		width: 26em;
+	}
+
+}*/
 div.container h1,
 div.container h2,
 div.container h3,
@@ -20,7 +29,8 @@ div.container p {
 }
 div.container h1,
 div.container h2,
-div.container h3 {
+div.container h3,
+div.container h4 {
   font-weight: bold;
   color: #25417c;
 }
@@ -85,18 +95,6 @@ button {
 }
 input {
   color: #25417c;
-}
-input input::-webkit-input-placeholder {
-  color: white;
-}
-input input:-moz-placeholder {
-  color: white;
-}
-input textarea::-webkit-input-placeholder {
-  color: white;
-}
-input textarea:-moz-placeholder {
-  color: white;
 }
 input:focus {
   background: rgba(255, 255, 255, 0.75);

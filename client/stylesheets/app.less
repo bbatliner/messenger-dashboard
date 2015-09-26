@@ -28,6 +28,16 @@
 	padding: 0.25em 0;
 }
 
+/*
+Currently Not Working
+section.page.login{
+
+	div.container{
+		width: 26em;
+	}
+
+}*/
+
 div.container{
 
 	h1, h2, h3, p{
@@ -35,7 +45,7 @@ div.container{
 		margin: 0.5em 0;
 	}
 
-	h1, h2, h3{
+	h1, h2, h3, h4{
 		font-weight: bold;
 		color: @darkTone;
 	}
@@ -76,10 +86,6 @@ body {
 nav{
 
 	background: @focusTone url('stylesheets/img/transDiagmonds.png');
-
-	div.container-fluid{
-			
-	}
 
 	div.navbar-header{
 		.BodyFont(white, 1.5em);
@@ -130,12 +136,13 @@ input, button{
 }
 
 input{
-	.PlaceHolder(white);
+	//.PlaceHolder(white);
 	color: @darkTone;
 }
 
 input:focus{
 	background: rgba(255, 255, 255, 0.75);
+	// Do not remove this, for some reason, text changes to white without it
 	color: @darkTone;
 }
 
