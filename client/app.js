@@ -6,6 +6,7 @@ var Router = require('./router');
 var MainView = require('./views/main');
 var Me = require('./models/me');
 var domReady = require('domready');
+var ipc = require('electron-safe-ipc/guest');
 
 // Polyfill promises
 require('es6-promise').polyfill();
@@ -33,6 +34,26 @@ app.extend({
         // this kicks off our hash based routing (location or slash based routing doesn't work in Electron/file://)
         // and causes the first matching handler in the router to fire.
         this.router.history.start({ pushState: false, root: this.root });
+
+        // Set up error handling
+        ipc.on(app.ipc.facebookAuthErro, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookLoginError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookFetchMessagesError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookFetchThreadsError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookSendMessageError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookFetchFriendsListError, function (err) {
+            console.error(err);
+        });
     },
     // This is a helper for navigating around the app.
     // this gets called by a global click handler that handles

@@ -28,7 +28,6 @@ module.exports = View.extend({
             this.model.messages.fetch();
         }
 
-        // TODO: Should this be moved up to 'main' or 'app', and it should then add the message to the appropriate thread?
         // Thread specific message received channel
         var messageReceived = app.ipc.facebookMessageReceived + '-' + this.model.threadFbid;
         var sentMessage = app.ipc.facebookSendMessage + '-' + this.model.threadFbid;

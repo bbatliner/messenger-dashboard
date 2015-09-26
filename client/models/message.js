@@ -14,5 +14,8 @@ module.exports = AmpersandState.extend({
         threadID: ['string', true, ''],
         threadName: ['string', true, ''],
         timestamp: ['number', false, Date.now()],
+        timestampAbsolute: ['string', false, ''],
+        timestampRelative: ['string', false, ''],
+        timestampDatetime: ['string', false, '']
     }
 });
