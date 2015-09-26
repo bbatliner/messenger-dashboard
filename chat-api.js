@@ -12,11 +12,16 @@ var api = null; // API object returned on log in
 
 module.exports = function () {
 
+    // Memoize these API calls for performance
+    var storedUserIds = {};
     function fbIdToUser(fbid) {
         return new Promise(function (resolve, reject) {
             // Remove the fbid: prefix found in some fields
             if (fbid.startsWith('fbid:')) {
                 fbid = fbid.substring(5);
+            }
+            if (fbid in storedUserIds) {
+                return resolve(storedUserIds[fbid]);
             }
             api.getUserInfo(fbid, function (err, ret) {
                 if (err) {
@@ -24,6 +29,7 @@ module.exports = function () {
                     return reject(err);
                 }
                 var user = ret[fbid];
+                storedUserIds[fbid] = user;
                 resolve(user);
             });
         });
