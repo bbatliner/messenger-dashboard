@@ -1,7 +1,6 @@
 'use strict';
 
 var AmpersandModel = require('ampersand-model');
-var ThreadCollection = require('./thread-collection');
 
 
 module.exports = AmpersandModel.extend({
@@ -26,8 +25,5 @@ module.exports = AmpersandModel.extend({
                 return this.firstName + ' ' + this.lastName;
             }
         }
-    },
-    collections: {     
-        threads: ThreadCollection      
     }
 });

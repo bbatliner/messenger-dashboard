@@ -19,5 +19,7 @@ for (var channel in channels) {
 // Login does not have associated data to identify the channel with (thread id, user id, etc)
 // So we manually add this generic success channel
 channels.facebookLoginSuccess = channels.facebookLogin + '-success';
+// Same with fetching threads
+channels.facebookFetchThreadsSuccess = channels.facebookFetchThreads + '-success';
 
 module.exports = channels;
