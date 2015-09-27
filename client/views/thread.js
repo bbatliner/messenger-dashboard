@@ -36,7 +36,7 @@ module.exports = View.extend({
         ipc.removeAllListeners(messageReceived);
         ipc.on(messageReceived, function (message) {
             this.model.messages.add(message);
-            this.bump();         
+            this.model.bump();         
         }.bind(this));
 
         ipc.removeAllListeners(sentMessage);
@@ -50,7 +50,7 @@ module.exports = View.extend({
                 body: this.queryByHook('reply').value
             });
             this.model.messages.add(newMessage);
-            this.bump();
+            this.model.bump();
             this.queryByHook('reply').value = '';
         }.bind(this));
 
@@ -64,10 +64,5 @@ module.exports = View.extend({
 
     handleRefreshClick: function () {
         this.model.messages.fetch();
-    },
-
-    bump: function () {
-        this.model.timestamp = Date.now();
-        this.model.collection.sort();
     }
 });

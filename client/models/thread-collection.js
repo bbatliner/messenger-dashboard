@@ -9,6 +9,8 @@ var ipc = require('electron-safe-ipc/guest');
 module.exports = AmpersandCollection.extend({
     model: Thread,
 
+    mainIndex: ['threadFbid'],
+
     comparator: function (a, b) { 
         return b.timestamp - a.timestamp; // put the most recent timestamps at the top of the list
     },

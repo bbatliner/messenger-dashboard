@@ -14,6 +14,7 @@ module.exports = function () {
 
     // Memoize these API calls for performance
     var storedUserIds = {};
+    // Convert a Facebook ID to a Facebook User object
     function fbIdToUser(fbid) {
         return new Promise(function (resolve, reject) {
             if (fbid in storedUserIds) {
@@ -21,7 +22,6 @@ module.exports = function () {
             }
             api.getUserInfo(fbid, function (err, ret) {
                 if (err) {
-                    console.error(err);
                     return reject(err);
                 }
                 var user = ret[fbid];
@@ -32,22 +32,64 @@ module.exports = function () {
         });
     }
 
+    // Parse a Facebook thread object and attach its proper name
+    function parseThreadName(thread) {
+        return new Promise(function (resolve, reject) {
+            // If this conversation is only between two people
+            if (thread.participants.length <= 2) {
+                // Find the name of the other person and attach it to the thread object
+                fbIdToUser(thread.threadFbid)
+                    .then(function (user) {
+                        thread.name = user.name;
+                        resolve(thread);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    });
+            }
+            // If this is an unnamed group conversation
+            else if (thread.name === '') {
+                var promises = [];
+                thread.participants.forEach(function (participant) {
+                    promises.push(fbIdToUser(participant));
+                });
+                Promise.all(promises)
+                    .then(function (users) {
+                        var name = '';
+                        for (var i = 0, len = users.length; i < len; i++) {
+                            name += users[i].name;
+                            if (i !== len - 1) { name += ', '; }
+                            if (i === len - 2) { name += '& '; }
+                        }
+                        thread.name = name;
+                        resolve(thread);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    });
+            }
+            // Otherwise if the name is defined, send back the thread as-is
+            else {
+                resolve(thread);
+            }
+        });
+    }
+
     // =====
     // LOGIN
     // =====
-    function afterLogin() {
-        var userId = api.getCurrentUserID();
-        fbIdToUser(userId)
-            .then(function (user) {
-                ipc.send(ipcChannels.facebookLoginSuccess, user);
-            })
-            .catch(function (err) {
-                console.error(err);
-                ipc.send(ipcChannels.facebookLoginError, JSON.stringify(err));
-            });
-    }
-
     ipc.on(ipcChannels.facebookLogin, function (username, password) {
+        function afterLogin() {
+            var userId = api.getCurrentUserID();
+            fbIdToUser(userId)
+                .then(function (user) {
+                    ipc.send(ipcChannels.facebookLoginSuccess, user);
+                })
+                .catch(function (err) {
+                    console.error(err);
+                    ipc.send(ipcChannels.facebookLoginError, JSON.stringify(err));
+                });
+        }
         // If already logged in, send back the logged in user
         if (api !== null) {
             return afterLogin();
@@ -82,7 +124,6 @@ module.exports = function () {
         if (api === null) {
             return ipc.send(ipcChannels.facebookAuthError, 'Please log in to Facebook to use the chat API.');
         }
-
         api.sendMessage(message, threadId, function (err, info) {
             if (err) {
                 console.error(err);
@@ -106,47 +147,16 @@ module.exports = function () {
                 return ipc.send(ipcChannels.facebookFetchThreadsError, JSON.stringify(err));
             }
             threads.forEach(function (thread) {
-                // If this conversation is only between two people
-                if (thread.participants.length <= 2) {
-                    // Find the name of the other person and attach it to the thread object
-                    fbIdToUser(thread.threadFbid)
-                        .then(function (user) {
-                            thread.name = user.name;
-                            ipc.send(ipcChannels.facebookFetchThreadsSuccess, [thread]);
-                        })
-                        .catch(function (err) {
-                            console.error(err);
-                            ipc.send(ipcChannels.facebookFetchThreadsError, JSON.stringify(err));
-                        });
-                }
-                // If this is an unnamed group conversation
-                else if (thread.name === '') {
-                    var promises = [];
-                    thread.participants.forEach(function (participant) {
-                        promises.push(fbIdToUser(participant));
+                // Send these threads as we parse their names for "smooth" loading in the UI
+                parseThreadName(thread)
+                    .then(function (thread) {
+                        ipc.send(ipcChannels.facebookFetchThreadsSuccess, [thread]);
+                    })
+                    .catch(function (err) {
+                        console.error(err);
+                        ipc.send(ipcChannels.facebookFetchMessagesError, JSON.stringify(err));
                     });
-                    Promise.all(promises)
-                        .then(function (users) {
-                            var name = '';
-                            for (var i = 0, len = users.length; i < len; i++) {
-                                name += users[i].name;
-                                if (i !== len - 1) { name += ', '; }
-                                if (i === len - 2) { name += '& '; }
-                            }
-                            thread.name = name;
-                            ipc.send(ipcChannels.facebookFetchThreadsSuccess, [thread]);
-                        })
-                        .catch(function (err) {
-                            console.error(err);
-                            ipc.send(ipcChannels.facebookFetchThreadsError, JSON.stringify(err));
-                        });
-                }
-                // Otherwise if the name is defined, send back the thread as-is
-                else {
-                    ipc.send(ipcChannels.facebookFetchThreadsSuccess, [thread]);
-                }
             });
-            
         });
     });
 
@@ -170,33 +180,40 @@ module.exports = function () {
     // ==============
     // SEARCH THREADS
     // ==============
-    // ipc.on(ipcChannels.facebookSearchThreads, function (query) {
-    //     if (api === null) {
-    //         return ipc.send(ipcChannels.facebookAuthError, 'Please log in to Facebook to use the chat API.');
-    //     }
+    // Memoize these API calls for performance
+    var storedThreadSearches = {};
+    ipc.on(ipcChannels.facebookSearchThreads, function (query) {
+        if (api === null) {
+            return ipc.send(ipcChannels.facebookAuthError, 'Please log in to Facebook to use the chat API.');
+        }
 
-    //     api.searchThreads(query, function (err, threads) {
-    //         if (err) {
-    //             return ipc.send(ipcChannels.facebookSearchThreadsError, JSON.stringify(err));
-    //         }
+        // Don't waste an api request on an empty string...
+        if (query.length === 0) {
+            return;
+        }
 
-    //         var promises = [];
-    //         friendIds.forEach(function (friendId) {
-    //             promises.push(fbIdToUser(friendId.toString()));
-    //         });
-    //         Promise.all(promises)
-    //             .then(function (friends) {
-    //                 var trimmedFriends = friends.map(function (friend) {
-    //                     return {
-    //                         id: friend.id,
-    //                         name: friend.name
-    //                     };
-    //                 });
-    //                 ipc.send(ipcChannels.facebookSearchThreads + '-' + userId, trimmedFriends);
-    //             })
-    //             .catch(function (err) {
-    //                 ipc.send(ipcChannels.facebookSearchThreadsError, JSON.stringify(err));
-    //             });
-    //     });
-    // });
+        if (query in storedThreadSearches) {
+            return ipc.send(ipcChannels.facebookSearchThreadsSuccess, storedThreadSearches[query]);
+        }
+
+        api.searchForThread(query, function (err, threads) {
+            if (err) {
+                return ipc.send(ipcChannels.facebookSearchThreadsError, JSON.stringify(err));
+            }
+            var promises = [];
+            threads.forEach(function (thread) {
+                promises.push(parseThreadName(thread));
+            });
+            // Wait for all of these threads' names to resolve so typeahead suggestions appear all at once
+            Promise.all(promises)
+                .then(function (threads) {
+                    storedThreadSearches[query] = threads;
+                    ipc.send(ipcChannels.facebookSearchThreadsSuccess, threads);
+                })
+                .catch(function (err) {
+                    console.error(err);
+                    ipc.send(ipcChannels.facebookSearchThreadsError, JSON.stringify(err));
+                });
+        });
+    });
 };

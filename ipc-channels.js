@@ -22,6 +22,8 @@ for (var channel in channels) {
 channels.facebookLoginSuccess = channels.facebookLogin + '-success';
 // Same with fetching threads
 channels.facebookFetchThreadsSuccess = channels.facebookFetchThreads + '-success';
+// Same with searching threads
+channels.facebookSearchThreadsSuccess = channels.facebookSearchThreads + '-success';
 
 // Generic auth error (api === null)
 channels.facebookAuthError = 'facebook-auth-error';

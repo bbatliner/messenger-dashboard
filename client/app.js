@@ -36,7 +36,7 @@ app.extend({
         this.router.history.start({ pushState: false, root: this.root });
 
         // Set up error handling
-        ipc.on(app.ipc.facebookAuthErro, function (err) {
+        ipc.on(app.ipc.facebookAuthError, function (err) {
             console.error(err);
         });
         ipc.on(app.ipc.facebookLoginError, function (err) {
@@ -52,6 +52,9 @@ app.extend({
             console.error(err);
         });
         ipc.on(app.ipc.facebookFetchFriendsListError, function (err) {
+            console.error(err);
+        });
+        ipc.on(app.ipc.facebookSearchThreadsError, function (err) {
             console.error(err);
         });
     },

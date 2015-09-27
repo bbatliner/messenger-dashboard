@@ -43,5 +43,9 @@ module.exports = AmpersandState.extend({
                 return this.participants.length > 2;
             }
         },
+    },
+    bump: function () {
+        this.timestamp = Date.now();
+        this.collection.sort();
     }
 });

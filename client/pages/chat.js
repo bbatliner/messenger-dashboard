@@ -23,7 +23,7 @@ module.exports = PageView.extend({
 
         this.renderSubview(new AddThreadView({
             model: this.model
-        }), this.queryByHook('add-new-thread'));
+        }), this.queryByHook('add-thread'));
 
         return this;
     }
