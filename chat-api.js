@@ -5,7 +5,7 @@
 // to fulfill those requests.
 
 var login = require('facebook-chat-api');
-var ipc = require('electron-safe-ipc/host'); // Module for inter-process communication
+var ipc = require('electron-safe-ipc/host');
 var ipcChannels = require('./ipc-channels');
 
 var api = null; // API object returned on log in
@@ -47,7 +47,6 @@ module.exports = function () {
                         resolve(thread);
                     })
                     .catch(function (err) {
-                        console.log(thread);
                         reject(err);
                     });
             }
