@@ -25,6 +25,9 @@ module.exports = function () {
                     return reject(err);
                 }
                 var user = ret[fbid];
+                if (!user) {
+                    return reject('Fbid ' + fbid + ' did not match any Facebook users.');
+                }
                 storedUserIds[fbid] = user;
                 user.id = fbid;
                 resolve(user);
@@ -35,8 +38,8 @@ module.exports = function () {
     // Parse a Facebook thread object and attach its proper name
     function parseThreadName(thread) {
         return new Promise(function (resolve, reject) {
-            // If this conversation is only between two people
-            if (thread.participants.length <= 2) {
+            // If this conversation is only between two people (and has never been between more than two people)
+            if (thread.participants.length + thread.formerParticipants.length <= 2) {
                 // Find the name of the other person and attach it to the thread object
                 fbIdToUser(thread.threadFbid)
                     .then(function (user) {
@@ -44,6 +47,7 @@ module.exports = function () {
                         resolve(thread);
                     })
                     .catch(function (err) {
+                        console.log(thread);
                         reject(err);
                     });
             }
