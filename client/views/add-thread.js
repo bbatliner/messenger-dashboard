@@ -17,7 +17,8 @@ module.exports = View.extend({
 
     events: {
         'keyup [data-hook=friends-list]': 'handleQueryChange',
-        'click [data-hook=add-new-thread]': 'handleAddThreadClick'
+        'click [data-hook=add-new-thread]': 'handleAddThreadClick',
+        'awesomplete-selectcomplete [data-hook=friends-list]': 'handleAddThreadClick'
     },
 
     initialize: function () {
@@ -60,15 +61,20 @@ module.exports = View.extend({
         var threadName = this.queryByHook('friends-list').value;
         var thread = this.friendsList.find(function (friend) { return friend.name === threadName; });
         if (thread) {
+            this.queryByHook('friends-list').value = '';
             // Only add the thread if it doesn't already exist in our threads
-            if (!app.me.threads.get(thread.threadFbid)) {
+            var existingThread = app.me.threads.get(thread.threadFbid);
+            if (!existingThread) {
                 var newThread = new Thread(thread);
                 var messages = new MessageCollection([], { parent: newThread });
                 newThread.messages = messages;
                 app.me.threads.add(newThread);
                 newThread.bump(); // TODO: If styles get changed around this may not be necessary in the future
-                this.queryByHook('friends-list').value = '';
-            }            
+            }
+            // Otherwise bump the existing thread
+            else {
+                existingThread.bump(); // TODO: If styles get changed around this may not be necessary in the future
+            }
         } 
         // else alert the user that that thread doesn't exist?
     }

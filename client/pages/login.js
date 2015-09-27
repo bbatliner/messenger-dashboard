@@ -9,6 +9,7 @@ module.exports = PageView.extend({
     template: require('../templates/pages/login.jade')(),
 
     events: {
+        'keyup [data-hook=password]': 'handleInputEnter',
         'click [data-hook=login]': 'handleLoginClick'
     },
 
@@ -21,6 +22,12 @@ module.exports = PageView.extend({
             this.model.threads = new ThreadCollection();
             app.navigate('messages');
         }.bind(this));
+    },
+
+    handleInputEnter: function (e) {
+        if (e.keyCode === 13) {
+            this.handleLoginClick(e);
+        }
     },
 
     handleLoginClick: function (e) {

@@ -16,6 +16,7 @@ module.exports = View.extend({
 
     events: {
         'click [data-hook=send-reply]': 'handleSendReplyClick',
+        'keyup [data-hook=reply]': 'handleInputEnter',
         'click [data-hook=refresh]': 'handleRefreshClick'
     },
 
@@ -55,6 +56,12 @@ module.exports = View.extend({
         }.bind(this));
 
         return this;
+    },
+
+    handleInputEnter: function (e) {
+        if (e.keyCode === 13) {
+            this.handleSendReplyClick(e);
+        }
     },
 
     handleSendReplyClick: function () {
