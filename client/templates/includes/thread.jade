@@ -1,7 +1,9 @@
 div.thread
-    h4(data-hook='name')
-    button.btn.btn-xs.btn-primary(data-hook='refresh') Refresh
-    div(data-hook='message-list')
-    input.form-control(type='text', placeholder='Write a message...', data-hook='reply')
-    button.btn.btn-default(type='submit', data-hook='send-reply') Send message
+    div.beforemessages
+        h4(data-hook='name')
+        button.btn.btn-xs.btn-primary(data-hook='refresh') Refresh
+    div.messages(data-hook='message-list')
+    div.aftermessages
+        input.form-control(type='text', placeholder='Write a message...', data-hook='reply')
+        button.btn.btn-default(type='submit', data-hook='send-reply') Send message
     hr

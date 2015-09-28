@@ -69,6 +69,20 @@ div.container {
   padding: 1em 2em;
   background: rgba(255, 255, 255, 0.35);
 }
+.thread {
+  height: 463px;
+  margin: 25px 5px;
+}
+.thread .beforemessages {
+  height: 15%;
+}
+.thread .messages {
+  height: 65%;
+  overflow: auto;
+}
+.thread .aftermessages {
+  height: 20%;
+}
 /* Custom awesomplete colors */
 div.awesomplete li[aria-selected=true] {
   background-color: #3a5795;
@@ -90,7 +104,6 @@ button {
   display: block;
   margin: 0.5em 0;
   width: 100%;
-  height: 3em;
   box-sizing: border-box;
   font-family: 'Noto Sans', sans-serif;
   color: white;

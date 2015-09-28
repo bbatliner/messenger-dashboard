@@ -13,6 +13,8 @@ require('es6-promise').polyfill();
 
 // Define some constants for IPC channels
 app.ipc = require('../ipc-channels');
+// Define some constants for in-app events
+app.events = require('./app-events');
 
 // attach our app to `window` so we can
 // easily access it from the console.

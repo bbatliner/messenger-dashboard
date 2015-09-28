@@ -13,7 +13,7 @@ module.exports = AmpersandState.extend({
         messageID: ['string', true, ''],
         threadID: ['string', true, ''],
         threadName: ['string', true, ''],
-        timestamp: ['number', false, Date.now()],
+        timestamp: ['number', true, 0],
         timestampAbsolute: ['string', false, ''],
         timestampRelative: ['string', false, ''],
         timestampDatetime: ['string', false, '']

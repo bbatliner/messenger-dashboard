@@ -32,12 +32,14 @@ module.exports = View.extend({
         // Thread specific message received channel
         var messageReceived = app.ipc.facebookMessageReceived + '-' + this.model.threadFbid;
         var sentMessage = app.ipc.facebookSendMessage + '-' + this.model.threadFbid;
+        var messagesFetched = app.events.messagesFetched + '-' + this.model.threadFbid;
 
         // Add new messages received to this thread, if they belong
         ipc.removeAllListeners(messageReceived);
         ipc.on(messageReceived, function (message) {
             this.model.messages.add(message);
-            this.model.bump();         
+            this.model.bump();    
+            this.scrollToBottom();     
         }.bind(this));
 
         ipc.removeAllListeners(sentMessage);
@@ -48,12 +50,18 @@ module.exports = View.extend({
                 senderID: app.me.id,
                 messageID: messageInfo.messageID,
                 threadID: messageInfo.threadID !== null ? messageInfo.threadID : this.model.threadFbid,
-                body: this.queryByHook('reply').value
+                body: this.queryByHook('reply').value,
+                timestamp: Date.now()
             });
             this.model.messages.add(newMessage);
             this.model.bump();
             this.queryByHook('reply').value = '';
         }.bind(this));
+
+        // Make sure the chats stayed scrolled to the bottom (whenever chats or threads are added/removed/sorted)
+        app.on(messagesFetched, this.scrollToBottom.bind(this));
+        this.collection.on('add remove sort', this.scrollToBottom.bind(this));
+        this.model.messages.on('add remove sort', this.scrollToBottom.bind(this));
 
         return this;
     },
@@ -71,5 +79,10 @@ module.exports = View.extend({
 
     handleRefreshClick: function () {
         this.model.messages.fetch();
+    },
+
+    scrollToBottom: function () {
+        var el = this.queryByHook('message-list');
+        el.scrollTop = el.scrollHeight;
     }
 });
