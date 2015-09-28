@@ -18,7 +18,7 @@
     "domready": "^1.0.8",
     "electron-safe-ipc": "^0.6.1",
     "es6-promise": "^3.0.2",
-    "facebook-chat-api": "^0.2.11",
+    "facebook-chat-api": "^1.0.0",
     "jquery": "^2.1.4",
     "less-plugin-autoprefix": "^1.5.1",
     "local-links": "^1.4.0",
