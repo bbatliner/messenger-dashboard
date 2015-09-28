@@ -32,7 +32,6 @@ module.exports = View.extend({
         // Thread specific message received channel
         var messageReceived = app.ipc.facebookMessageReceived + '-' + this.model.threadFbid;
         var sentMessage = app.ipc.facebookSendMessage + '-' + this.model.threadFbid;
-        var messagesFetched = app.events.messagesFetched + '-' + this.model.threadFbid;
 
         // Add new messages received to this thread, if they belong
         ipc.removeAllListeners(messageReceived);
@@ -59,7 +58,6 @@ module.exports = View.extend({
         }.bind(this));
 
         // Make sure the chats stayed scrolled to the bottom (whenever chats or threads are added/removed/sorted)
-        app.on(messagesFetched, this.scrollToBottom.bind(this));
         this.collection.on('add remove sort', this.scrollToBottom.bind(this));
         this.model.messages.on('add remove sort', this.scrollToBottom.bind(this));
 

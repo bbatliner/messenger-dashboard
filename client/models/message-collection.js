@@ -18,7 +18,6 @@ module.exports = AmpersandCollection.extend({
                 message.threadID = this.parent.threadFbid;
             }.bind(this));
             this.add(messages);
-            app.trigger(app.events.messagesFetched + '-' + this.parent.threadFbid);
         }.bind(this));
     },
 
