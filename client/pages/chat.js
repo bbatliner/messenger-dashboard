@@ -19,19 +19,20 @@ module.exports = PageView.extend({
         this.renderWithTemplate(this);
 
         this.activeThreadSwitcher = new ViewSwitcher(this.queryByHook('thread-list'), {
-            // hide: function (oldView, cb) {
-            //     oldView.el.classList.add('slideOutRight');
-            // },
-            // show: function (newView) {
-            //     // newView.el.classList.add('slideInLeft');
-            // }
+            // nothing!
         });
 
         ipc.send(app.ipc.facebookFetchThreads, 1);
 
         app.me.threads.on('active-changed', function() {
             var activeIndex = app.me.threads.models.findIndex(function(model) { return model.active; });
-            this.activeThreadSwitcher.set(new ThreadView({model: app.me.threads.at(activeIndex === -1 ? 0 : activeIndex)}));
+            var newThread = new ThreadView({model: app.me.threads.at(activeIndex)});
+            var currentThreadEl = document.querySelector('.thread');
+            currentThreadEl.classList.add('slideOutRight');
+            setTimeout(function () {
+                currentThreadEl.parent.removeChild(currentThreadEl);
+            }, 1000);
+            newThread.render();
         }.bind(this));
 
         this.renderSubview(new AddThreadView({
