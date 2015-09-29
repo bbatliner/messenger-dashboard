@@ -19,7 +19,12 @@ module.exports = PageView.extend({
         this.renderWithTemplate(this);
 
         this.activeThreadSwitcher = new ViewSwitcher(this.queryByHook('thread-list'), {
-            waitForRemove: true
+            // hide: function (oldView, cb) {
+            //     oldView.el.classList.add('slideOutRight');
+            // },
+            // show: function (newView) {
+            //     // newView.el.classList.add('slideInLeft');
+            // }
         });
 
         ipc.send(app.ipc.facebookFetchThreads, 1);

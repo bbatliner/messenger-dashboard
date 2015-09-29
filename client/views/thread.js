@@ -43,17 +43,19 @@ module.exports = View.extend({
 
         ipc.removeAllListeners(sentMessage);
         ipc.on(sentMessage, function (messageInfo) {
+            var replyInput = this.queryByHook('reply');
             // Create new message with basic info
             var newMessage = new Message({
                 senderName: app.me.fullName,
                 senderID: app.me.id,
                 messageID: messageInfo.messageID,
                 threadID: messageInfo.threadID !== null ? messageInfo.threadID : this.model.threadFbid,
-                body: this.queryByHook('reply').value,
+                body: replyInput.value,
                 timestamp: Date.now()
             });
             this.model.messages.add(newMessage);
-            this.queryByHook('reply').value = '';
+            replyInput.value = '';
+            replyInput.focus();
         }.bind(this));
 
         // Make sure the chats stayed scrolled to the bottom (whenever chats are added/removed/sorted, or this thread is marked active)
