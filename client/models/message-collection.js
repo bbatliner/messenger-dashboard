@@ -14,6 +14,7 @@ module.exports = AmpersandCollection.extend({
         var threadFetchMessage = app.ipc.facebookFetchMessages + '-' + this.parent.threadFbid;
         ipc.removeAllListeners(threadFetchMessage);
         ipc.on(threadFetchMessage, function (messages) {
+            this.reset();
             messages.forEach(function (message) { 
                 message.threadID = this.parent.threadFbid;
             }.bind(this));
@@ -22,7 +23,6 @@ module.exports = AmpersandCollection.extend({
     },
 
     fetch: function () {
-        this.reset();
         ipc.send(app.ipc.facebookFetchMessages, this.parent.threadFbid);
     }
 });

@@ -69,11 +69,11 @@ module.exports = View.extend({
                 var messages = new MessageCollection([], { parent: newThread });
                 newThread.messages = messages;
                 app.me.threads.add(newThread);
-                newThread.bump(); // TODO: If styles get changed around this may not be necessary in the future
+                newThread.setActive();
             }
             // Otherwise bump the existing thread
             else {
-                existingThread.bump(); // TODO: If styles get changed around this may not be necessary in the future
+                existingThread.setActive();
             }
         } 
         // else alert the user that that thread doesn't exist?

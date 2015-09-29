@@ -5,7 +5,7 @@ var AmpersandCollection = require('ampersand-collection');
 var MessageCollection = require('./message-collection');
 var Thread = require('./thread');
 var ipc = require('electron-safe-ipc/guest');
-// var _ = require('lodash');
+
 
 module.exports = AmpersandCollection.extend({
     model: Thread,
@@ -24,15 +24,8 @@ module.exports = AmpersandCollection.extend({
                 var messages = new MessageCollection([], { parent: newThread });
                 newThread.messages = messages;
                 this.add(newThread);
+                if (this.length === 1) { newThread.setActive(); }
             }.bind(this));
-            // _.defer(function () {
-            //     $('#fullpage').fullpage();
-            // });
         }.bind(this));
-    },
-
-    fetch: function () {
-        this.reset();
-        ipc.send(app.ipc.facebookFetchThreads);
     }
 });

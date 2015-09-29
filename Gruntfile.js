@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     },
     cssmin: {
       build: {
-        src: ['node_modules/awesomplete/awesomplete.css', 'node_modules/fullpage.js/jquery.fullPage.css', 'client/stylesheets/*.css'],
+        src: ['node_modules/awesomplete/awesomplete.css', 'client/stylesheets/*.css'],
         dest: 'client/bundle.css'
       }
     },

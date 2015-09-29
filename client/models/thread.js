@@ -6,6 +6,7 @@ var AmpersandState = require('ampersand-state');
 module.exports = AmpersandState.extend({
     type: 'object',
     props: {
+        active: ['boolean', true, false],
         threadID: ['string', true, ''],
         threadFbid: ['string', true, ''],
         participants: ['array', true, function () { return []; }],
@@ -40,12 +41,17 @@ module.exports = AmpersandState.extend({
             deps: ['participants'],
             cache: true,
             fn: function () {
-                return this.participants.length > 2;
+                return this.participants.length + this.formerParticipants > 2;
             }
         },
     },
-    bump: function () {
-        this.timestamp = Date.now();
-        this.collection.sort();
+    setActive: function () {
+        if (this.collection) {
+            this.collection.forEach(function (thread) {
+                thread.active = false;
+            });
+        }
+        this.active = true;
+        this.trigger('active-changed');
     }
 });

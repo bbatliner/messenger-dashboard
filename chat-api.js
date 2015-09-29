@@ -139,12 +139,12 @@ module.exports = function () {
     // =============
     // FETCH THREADS
     // =============
-    ipc.on(ipcChannels.facebookFetchThreads, function () {
+    ipc.on(ipcChannels.facebookFetchThreads, function (number) {
         if (api === null) {
             return ipc.send(ipcChannels.facebookAuthError, 'Please log in to Facebook to use the chat API.');
         }
 
-        api.getThreadList(0, 10, function (err, threads) {
+        api.getThreadList(0, number || 10, function (err, threads) {
             if (err) {
                 console.error(err);
                 return ipc.send(ipcChannels.facebookFetchThreadsError, JSON.stringify(err));

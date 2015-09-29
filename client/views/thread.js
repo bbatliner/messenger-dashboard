@@ -5,6 +5,7 @@ var View = require('ampersand-view');
 var Message = require('../models/message');
 var MessageView = require('./message');
 var ipc = require('electron-safe-ipc/guest');
+var _ = require('lodash');
 
 
 module.exports = View.extend({
@@ -37,7 +38,6 @@ module.exports = View.extend({
         ipc.removeAllListeners(messageReceived);
         ipc.on(messageReceived, function (message) {
             this.model.messages.add(message);
-            this.model.bump();    
             this.scrollToBottom();     
         }.bind(this));
 
@@ -53,13 +53,14 @@ module.exports = View.extend({
                 timestamp: Date.now()
             });
             this.model.messages.add(newMessage);
-            this.model.bump();
             this.queryByHook('reply').value = '';
         }.bind(this));
 
-        // Make sure the chats stayed scrolled to the bottom (whenever chats or threads are added/removed/sorted)
-        this.collection.on('add remove sort', this.scrollToBottom.bind(this));
+        // Make sure the chats stayed scrolled to the bottom (whenever chats are added/removed/sorted, or this thread is marked active)
         this.model.messages.on('add remove sort', this.scrollToBottom.bind(this));
+        this.model.on('active-changed', function() {
+            _.defer(this.scrollToBottom.bind(this));
+        }.bind(this));
 
         return this;
     },
@@ -80,7 +81,10 @@ module.exports = View.extend({
     },
 
     scrollToBottom: function () {
-        var el = this.queryByHook('message-list');
-        el.scrollTop = el.scrollHeight;
+        var els = document.querySelectorAll('.thread .messages');
+        for (var i = 0, len = els.length; i < len; i++) {
+            var el = els[i];
+            el.scrollTop = el.scrollHeight;
+        }
     }
 });

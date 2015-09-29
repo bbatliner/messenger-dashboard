@@ -28,8 +28,7 @@ module.exports = Router.extend({
             return this.redirectTo('login');
         }
         app.trigger('page', new ChatPage({
-            model: app.me,
-            collection: app.me.threads
+            model: app.me
         }));
     },
 

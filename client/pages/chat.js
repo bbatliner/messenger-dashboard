@@ -1,8 +1,11 @@
 'use strict';
 
+var app = require('ampersand-app');
+var ViewSwitcher = require('ampersand-view-switcher');
 var PageView = require('./base');
 var ThreadView = require('../views/thread');
 var AddThreadView = require('../views/add-thread');
+var ipc = require('electron-safe-ipc/guest');
 
 
 module.exports = PageView.extend({
@@ -15,11 +18,16 @@ module.exports = PageView.extend({
     render: function () {
         this.renderWithTemplate(this);
 
-        this.renderCollection(this.collection, ThreadView, this.queryByHook('thread-list'));
+        this.activeThreadSwitcher = new ViewSwitcher(this.queryByHook('thread-list'), {
+            waitForRemove: true
+        });
 
-        if (!this.collection.length) {
-            this.collection.fetch();
-        }
+        ipc.send(app.ipc.facebookFetchThreads, 1);
+
+        app.me.threads.on('active-changed', function() {
+            var activeIndex = app.me.threads.models.findIndex(function(model) { return model.active; });
+            this.activeThreadSwitcher.set(new ThreadView({model: app.me.threads.at(activeIndex === -1 ? 0 : activeIndex)}));
+        }.bind(this));
 
         this.renderSubview(new AddThreadView({
             model: this.model
