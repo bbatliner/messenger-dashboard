@@ -21,46 +21,46 @@
 @BodyFont: @NotoSans;
 
 .BodyFont(@color: white, @size: 1.0em){
-	font-family: @NotoSans;
-	color: @color;
-	font-size: @size;
-	line-height: @size + 0.25em;
-	padding: 0.25em 0;
+    font-family: @NotoSans;
+    color: @color;
+    font-size: @size;
+    line-height: @size + 0.25em;
+    padding: 0.25em 0;
 }
 
 /*
 Currently Not Working
 section.page.login{
 
-	div.container{
-		width: 26em;
-	}
+    div.container{
+        width: 26em;
+    }
 
 }*/
 
 div.container{
 
-	h1, h2, h3, p{
-		.BodyFont();
-		margin: 0.5em 0;
-	}
+    h1, h2, h3, p{
+        .BodyFont();
+        margin: 0.5em 0;
+    }
 
-	h1, h2, h3, h4{
-		font-weight: bold;
-		color: @darkTone;
-	}
+    h1, h2, h3, h4{
+        font-weight: bold;
+        color: @darkTone;
+    }
 
-	h1{
-		font-size: 1.75em;
-	}
+    h1{
+        font-size: 1.75em;
+    }
 
-	h2{
-		font-size: 1.5em;
-	}
+    h2{
+        font-size: 1.5em;
+    }
 
-	p{
-		color: @darkTone;
-	}
+    p{
+        color: @darkTone;
+    }
 
 }
 
@@ -69,71 +69,71 @@ div.container{
 /*--------------------------------------------*/
 
 .Center(@textAlign: center){
-	margin: auto 0;
-	text-align: @textAlign;
-	//display: block;
+    margin: auto 0;
+    text-align: @textAlign;
+    //display: block;
 }
 
 html{
-	height: 100%;
-	background: url('stylesheets/img/blurPhone1.jpg') no-repeat center center fixed;
-	background-size: cover;
+    height: 100%;
+    background: url('stylesheets/img/blurPhone1.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 
 body {
-	height: 100%;
-	//background: @focusTone url('stylesheets/img/transDiagmonds.png');
+    height: 100%;
+    //background: @focusTone url('stylesheets/img/transDiagmonds.png');
 }
 
 nav{
 
-	position: absolute;
-	width: 100%;
-	height: 4em;
-	top: 0;
+    position: absolute;
+    width: 100%;
+    height: 4em;
+    top: 0;
 
-	background: @focusTone url('stylesheets/img/transDiagmonds.png');
+    background: @focusTone url('stylesheets/img/transDiagmonds.png');
 
-	div.navbar-header{
-		.BodyFont(white, 1.5em);
-		padding: 0.5em;
-		margin-left: 1.5em;
-		font-weight: bolder;
-	}
-	
+    div.navbar-header{
+        .BodyFont(white, 1.5em);
+        padding: 0.5em;
+        margin-left: 1.5em;
+        font-weight: bolder;
+    }
+    
 }
 
 div.container{
-	height: 100%;
+    height: 100%;
     margin: 0 2em;
     padding: 4em 2em 2em;
     box-sizing: border-box;
-	background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.35);
 
-	main {
-		height: 100%;
-		section {
-			height: 100%;
-		}
-	}
+    main {
+        height: 100%;
+        section {
+            height: 100%;
+        }
+    }
 }
 
 .threads {
-	height: 100%;
+    height: 100%;
 }
 
 .thread {
-	height: 80%;
-	.beforemessages {
-		height: 15%;
-	}
-	.messages {
-		height: 65%;
-		overflow: auto;
-	}
-	.aftermessages {
-		height: 20%;
-	}
+    height: 80%;
+    .beforemessages {
+        height: 15%;
+    }
+    .messages {
+        height: 65%;
+        overflow: auto;
+    }
+    .aftermessages {
+        height: 20%;
+    }
 }
 
 /* Custom awesomplete colors */
@@ -151,66 +151,66 @@ div.awesomplete {
 /*--------------------------------------------*/
 
 .FormCleanse(){
-	outline: none;
-	border: none;
-	border-radius: 0;
+    outline: none;
+    border: none;
+    border-radius: 0;
 }
 
 .PlaceHolder(@color: white) {
-	input::-webkit-input-placeholder { color: @color; }
-	input:-moz-placeholder { color: @color; }
-	textarea::-webkit-input-placeholder { color: @color; }
-	textarea:-moz-placeholder { color: @color; }
+    input::-webkit-input-placeholder { color: @color; }
+    input:-moz-placeholder { color: @color; }
+    textarea::-webkit-input-placeholder { color: @color; }
+    textarea:-moz-placeholder { color: @color; }
 }
 
 input, button{
-	.FormCleanse();
-	.Center();
-	display: block;
-	margin: 0.5em 0;
-	width: 100%;
-	//height: 3em;
-	box-sizing: border-box;
-	// So apparently, padding is not a thing
-	.BodyFont();
-	background: transparent;
-	border: 0.25em solid @darkTone;
-	transition: all 0.5s;
+    .FormCleanse();
+    .Center();
+    display: block;
+    margin: 0.5em 0;
+    width: 100%;
+    //height: 3em;
+    box-sizing: border-box;
+    // So apparently, padding is not a thing
+    .BodyFont();
+    background: transparent;
+    border: 0.25em solid @darkTone;
+    transition: all 0.5s;
 }
 
 input{
-	//.PlaceHolder(white);
-	color: @darkTone;
+    //.PlaceHolder(white);
+    color: @darkTone;
 }
 
 input:focus{
-	background: rgba(255, 255, 255, 0.75);
-	// Do not remove this, for some reason, text changes to white without it
-	color: @darkTone;
+    background: rgba(255, 255, 255, 0.75);
+    // Do not remove this, for some reason, text changes to white without it
+    color: @darkTone;
 }
 
 button{
-	width: 50%;
-	margin: auto auto;
-	border-radius: 0.75em;
-	background: transparent;
-	color: white;
-	// Based on tutorial from: stackoverflow.com/questions/17212094/fill-background-color-left-to-right-css
-	background: linear-gradient(to right, @darkTone 50%, white 50%);
-	background-size: 200% 100%;
-	background-position: left bottom;
-	transition: all 0.5s ease;
+    width: 50%;
+    margin: auto auto;
+    border-radius: 0.75em;
+    background: transparent;
+    color: white;
+    // Based on tutorial from: stackoverflow.com/questions/17212094/fill-background-color-left-to-right-css
+    background: linear-gradient(to right, @darkTone 50%, white 50%);
+    background-size: 200% 100%;
+    background-position: left bottom;
+    transition: all 0.5s ease;
 }
 
 button:hover{
-	background-position: right bottom;
-	color: @darkTone;
-	font-weight: bolder;
-	border-radius: 1.5em;
+    background-position: right bottom;
+    color: @darkTone;
+    font-weight: bolder;
+    border-radius: 1.5em;
 }
 
 button:active{
-	.OpacityPulse();
+    .OpacityPulse();
 }
 
 /*--------------------------------------------*/
@@ -218,17 +218,17 @@ button:active{
 /*--------------------------------------------*/
 
 @-webkit-keyframes opacityPulse{
-	from{
-		opacity: 1.0;
-	}
-	50%{
-		opacity: 0.25;
-	}
-	to{
-		opacity: 1.0;
-	}
+    from{
+        opacity: 1.0;
+    }
+    50%{
+        opacity: 0.25;
+    }
+    to{
+        opacity: 1.0;
+    }
 }
 
 .OpacityPulse(){
-	animation: opacityPulse 0.5s linear infinite;
+    animation: opacityPulse 0.5s linear infinite;
 }

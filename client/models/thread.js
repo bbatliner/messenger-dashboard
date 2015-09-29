@@ -41,7 +41,7 @@ module.exports = AmpersandState.extend({
             deps: ['participants'],
             cache: true,
             fn: function () {
-                return this.participants.length + this.formerParticipants > 2;
+                return this.participants.length + this.formerParticipants.length > 2;
             }
         },
     },
