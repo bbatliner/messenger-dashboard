@@ -1,4 +1,5 @@
 section.page.messages
     h2 View your messages here, #[span(data-hook='name')]!
     div(data-hook='add-thread')
-    div(data-hook='thread-list')
+    div#fullpage
+        div.section(data-hook='thread-list')

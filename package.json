@@ -19,6 +19,7 @@
     "electron-safe-ipc": "^0.6.1",
     "es6-promise": "^3.0.2",
     "facebook-chat-api": "^1.0.0",
+    "fullpage.js": "^2.7.3",
     "jquery": "^2.1.4",
     "less-plugin-autoprefix": "^1.5.1",
     "local-links": "^1.4.0",
@@ -41,19 +42,8 @@
     "jadeify": "^4.4.0"
   },
   "browser": {
-    "jquery": "./node_modules/jquery/dist/jquery.min.js"
   },
   "browserify-shim": {
-    "jquery": "jQuery",
-    "./node_modules/bootstrap/dist/js/bootstrap.min.js": {
-      "exports": "bootstrap",
-      "depends": [
-        "jquery"
-      ]
-    },
-    "./node_modules/awesomplete/awesomplete.min.js": {
-      "exports": "awesomplete"
-    }
   },
   "browserify": {
     "transform": [

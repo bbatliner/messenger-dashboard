@@ -8,6 +8,12 @@ var Me = require('./models/me');
 var domReady = require('domready');
 var ipc = require('electron-safe-ipc/guest');
 
+// Attach jQuery to the window... feels so wrong
+// TODO: Get this to work with browserify-shim??
+window.$ = require('jquery');
+// Load the fullpage extension which extends jQuery with the fullPage.js module
+require('fullPage.js');
+
 // Polyfill promises
 require('es6-promise').polyfill();
 
