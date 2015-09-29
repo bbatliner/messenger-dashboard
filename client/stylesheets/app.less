@@ -76,6 +76,7 @@ div.container{
 
 html{
     height: 100%;
+    overflow-y: hidden;
     background: url('stylesheets/img/blurPhone1.jpg') no-repeat center center fixed;
     background-size: cover;
 }
@@ -123,7 +124,13 @@ div.container{
 }
 
 .thread {
+    position: absolute;
     height: 80%;
+    width: 75%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
     .beforemessages {
         height: 15%;
     }

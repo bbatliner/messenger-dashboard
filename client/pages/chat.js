@@ -27,12 +27,17 @@ module.exports = PageView.extend({
         app.me.threads.on('active-changed', function() {
             var activeIndex = app.me.threads.models.findIndex(function(model) { return model.active; });
             var newThread = new ThreadView({model: app.me.threads.at(activeIndex)});
+            var threadList = this.queryByHook('thread-list');
             var currentThreadEl = document.querySelector('.thread');
-            currentThreadEl.classList.add('slideOutRight');
-            setTimeout(function () {
-                currentThreadEl.parent.removeChild(currentThreadEl);
-            }, 1000);
+            if (currentThreadEl) {
+                currentThreadEl.classList.add('slideOutRight');
+                setTimeout(function () {
+                    currentThreadEl.parentNode.removeChild(currentThreadEl);
+                }, 1000);
+            }
             newThread.render();
+            threadList.appendChild(newThread.el);
+            newThread.el.classList.add('slideInLeft');
         }.bind(this));
 
         this.renderSubview(new AddThreadView({
