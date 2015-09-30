@@ -12,9 +12,7 @@ module.exports = AmpersandCollection.extend({
 
     mainIndex: ['threadFbid'],
 
-    comparator: function (a, b) { 
-        return b.timestamp - a.timestamp; // put the most recent timestamps at the top of the list
-    },
+    comparator: 'timestamp', // TODO: Is this really necessary?
 
     initialize: function () {
         ipc.removeAllListeners(app.ipc.facebookFetchThreadsSuccess);

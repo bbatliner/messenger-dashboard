@@ -183,6 +183,7 @@ module.exports = function () {
     // ==============
     // SEARCH THREADS
     // ==============
+    // TODO: Add support for adding a new thread? (this only searches existing threads)
     // Memoize these API calls for performance
     var storedThreadSearches = {};
     ipc.on(ipcChannels.facebookSearchThreads, function (query) {
