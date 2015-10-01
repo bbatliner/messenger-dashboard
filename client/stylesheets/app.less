@@ -321,6 +321,21 @@ button:active{
 //Semitransparent background for temporary div viewing
 @see: rgba(21, 21, 21, 0.5);
 
+.SquareButton(@side: 2em){
+    border-radius: 0;
+    width: @side;
+    height: @side;
+    position: absolute;
+}
+
+div.form-group{
+
+    button{
+        .SquareButton(3em);
+    }
+
+}
+
 div.beforemessages{
 
     h4{
@@ -329,10 +344,7 @@ div.beforemessages{
     }
 
     button{
-        border-radius: 0;
-        width: 2em;
-        height: 2em;
-        position: absolute;
+        .SquareButton();
         margin-top: -4.70em;
     }
 
