@@ -1,8 +1,24 @@
 <html>
 <head>
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="../client/bundle.css">
-    <title>Messenger Dashboard</title><style type="text/css">html /deep/ * { min-width: 0; min-height: 0; }</style>
+    <link rel="stylesheet" type="text/css" href="../client/stylesheets/app.css">
+    <title>Messenger Dashboard</title>
+    <style type="text/css">
+    	
+    	html /deep/ * { min-width: 0; min-height: 0; }
+
+    	html{
+		    height: 100%;
+		    overflow-x: hidden;
+		    background: url('../client/stylesheets/img/blurPhone1.jpg') no-repeat center center fixed;
+		    background-size: cover;
+		}
+
+		nav{
+			background-image: url('../client/stylesheets/img/transDiagmonds.png');
+		}
+
+    </style>
 </head>
 <body>
 	
@@ -34,7 +50,7 @@
 					<div class="thread animated slideInLeft">
 						<div class="beforemessages">
 							<h4 data-hook="name">Future Admins of HHCduT</h4>
-							<button data-hook="refresh" class="btn btn-xs btn-primary">Refresh</button>
+							<button data-hook="refresh" class="btn btn-xs btn-primary">&#8634;</button>
 						</div>
 						<div data-hook="message-list" class="messages">
 								<div class="message">

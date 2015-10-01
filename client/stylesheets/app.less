@@ -8,7 +8,7 @@
 @darkTone: #0172C0;*/
 
 // Dynamic Colors
-@focusTone: #FF4385;
+@focusTone: #E72824;
 @lightTone: @focusTone + #222222;
 @darkTone: @focusTone - #222222;
 
@@ -312,4 +312,28 @@ button:active{
 
 .slideOutRight {
     animation-name: slideOutRight;
+}
+
+/*--------------------------------------------*/
+/*---> VINESH'S ADDITIONS <-------------------*/
+/*--------------------------------------------*/
+
+//Semitransparent background for temporary div viewing
+@see: rgba(21, 21, 21, 0.5);
+
+div.beforemessages{
+
+    h4{
+        .BodyFont(@darkTone, 1.5em);
+        margin-left: 2em;
+    }
+
+    button{
+        border-radius: 0;
+        width: 2em;
+        height: 2em;
+        position: absolute;
+        margin-top: -4.70em;
+    }
+
 }
