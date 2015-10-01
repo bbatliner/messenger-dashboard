@@ -328,15 +328,38 @@ button:active{
     position: absolute;
 }
 
+div.add-thread{
+    .Center();
+}
+
 div.form-group{
+
+    @inputLength: 28em;
+    margin-right: 0;
+
+    label{
+        .BodyFont();
+    }
+
+    input{
+        width: @inputLength;
+        height: 3em;
+        display: inline-block;
+        margin-left: -3em;
+    }
 
     button{
         .SquareButton(3em);
+        display: inline-block;
+        margin-top: -4.5em;
+        margin-left: (@inputLength / 2) - 1.75em;
     }
 
 }
 
 div.beforemessages{
+
+    background: @see;
 
     h4{
         .BodyFont(@darkTone, 1.5em);
