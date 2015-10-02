@@ -120,12 +120,12 @@ div.container{
 }
 
 .threads {
-    height: 100%;
+    height: auto;
 }
 
 .thread {
     position: absolute;
-    height: 80%; // TODO: Find a better way to do this so it only fills the height of its container (and doesn't overrun the bottom)
+    height: 100vh - 35%; // TODO: Find a better way to do this so it only fills the height of its container (and doesn't overrun the bottom)
     width: 75%;
     left: 0;
     right: 0;
@@ -375,7 +375,7 @@ button:active{
     .Center();
 }
 
-.form-group{
+.form-group, .aftermessages{
 
     @inputLength: 28em;
     margin-right: 0;
