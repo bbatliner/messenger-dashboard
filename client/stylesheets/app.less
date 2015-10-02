@@ -315,6 +315,49 @@ button:active{
 }
 
 /*--------------------------------------------*/
+/*---> SCROLLBAR <----------------------------*/
+/*--------------------------------------------*/
+
+@scrollBar: @darkTone;
+@scrollBarBack: transparent;
+@scrollBarSize: 10px;
+
+::-webkit-scrollbar{
+    width: @scrollBarSize;
+    height: @scrollBarSize;
+    background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-button{
+    background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-track{
+    background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-track-piece{
+    background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-thumb{
+    background: @scrollBar;
+    border-radius: @scrollBarSize/2;
+    position: absolute;
+    margin-left: -1 * @scrollBarSize;
+}
+
+::-webkit-scrollbar-corner{
+    width: @scrollBarSize;
+    height: @scrollBarSize;
+    background: @scrollBarBack;
+}
+
+::-webkit-resizer{
+    background: @scrollBarBack;
+}
+
+/*--------------------------------------------*/
 /*---> VINESH'S ADDITIONS <-------------------*/
 /*--------------------------------------------*/
 
