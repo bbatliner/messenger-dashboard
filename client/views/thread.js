@@ -30,6 +30,15 @@ module.exports = View.extend({
             this.model.messages.fetch();
         }
 
+        // Resize the thread's messages when the window changes size, so the chats always fill the screen
+        window.onresize = function () {
+            // SUPER DIRTY polynomial regression I did to calculate the height of the messages scrollbox depending on the height of the window.
+            // TODO: Find a pure CSS for this. Or find a more elegant javascript solution.
+            this.queryByHook('message-list').style.height = (-7.986753736*Math.pow(10,-11)*Math.pow(window.innerHeight,4)+3.90489248*Math.pow(10,-7)*Math.pow(window.innerHeight,3)-6.809750631*Math.pow(10,-4)*Math.pow(window.innerHeight,2)+5.490517914*Math.pow(10,-1)*Math.pow(window.innerHeight,1)-109.7386284).toString() + 'vh'; 
+        }.bind(this);
+        // Call once to start
+        _.defer(window.onresize);
+
         // Thread specific message received channel
         var messageReceived = app.ipc.facebookMessageReceived + '-' + this.model.threadFbid;
         var sentMessage = app.ipc.facebookSendMessage + '-' + this.model.threadFbid;

@@ -126,18 +126,16 @@ div.container{
 
 .thread {
     position: absolute;
-    height: 100vh - 35%; // TODO: Find a better way to do this so it only fills the height of its container (and doesn't overrun the bottom)
-    //Better way: use LESS Math to select the remaining screen space
+    // height is dynamically determined
     width: 75%;
+    top: 186px;
     left: 0;
     right: 0;
+    bottom: 0;
     margin: 0 auto;
     padding: 0 2em;
 
     .beforemessages {
-        
-        height: 15%;
-        
         h4{
             .BodyFont(@darkTone, 1.5em);
             margin-left: 2em;
@@ -150,11 +148,9 @@ div.container{
 
     }
     .messages {
-        height: 65%;
         overflow: auto;
     }
     .aftermessages {
-        height: 20%;
     }
 }
 
