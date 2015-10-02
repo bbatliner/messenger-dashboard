@@ -8,7 +8,7 @@
 @darkTone: #0172C0;*/
 
 // Dynamic Colors
-@focusTone: #47639E;
+@focusTone: #09A7CA;
 @lightTone: @focusTone + #222222;
 @darkTone: @focusTone - #222222;
 
@@ -56,6 +56,7 @@ div.container{
 
     h2{
         font-size: 1.5em;
+        text-align: center;
     }
 
     p{
@@ -120,12 +121,13 @@ div.container{
 }
 
 .threads {
-    height: 100%;
+    height: auto;
 }
 
 .thread {
     position: absolute;
-    height: 80%; // TODO: Find a better way to do this so it only fills the height of its container (and doesn't overrun the bottom)
+    height: 100vh - 35%; // TODO: Find a better way to do this so it only fills the height of its container (and doesn't overrun the bottom)
+    //Better way: use LESS Math to select the remaining screen space
     width: 75%;
     left: 0;
     right: 0;
@@ -133,7 +135,19 @@ div.container{
     padding: 0 2em;
 
     .beforemessages {
+        
         height: 15%;
+        
+        h4{
+            .BodyFont(@darkTone, 1.5em);
+            margin-left: 2em;
+        }
+
+        button{
+            .SquareButton();
+            margin-top: -2.75em;
+        }
+
     }
     .messages {
         height: 65%;
@@ -142,6 +156,35 @@ div.container{
     .aftermessages {
         height: 20%;
     }
+}
+
+.add-thread, .aftermessages{
+    .Center();
+}
+
+.form-group, .aftermessages{
+
+    @inputLength: 28em;
+    margin-right: 0;
+
+    label{
+        .BodyFont();
+    }
+
+    input{
+        width: @inputLength;
+        height: 3em;
+        display: inline-block;
+        margin-left: -3em;
+    }
+
+    button{
+        .SquareButton(3em);
+        display: inline-block;
+        margin-top: 0.5em;
+        margin-left: -0.25em;
+    }
+
 }
 
 /* Custom awesomplete colors */
@@ -169,6 +212,13 @@ div.awesomplete {
     input:-moz-placeholder { color: @color; }
     textarea::-webkit-input-placeholder { color: @color; }
     textarea:-moz-placeholder { color: @color; }
+}
+
+.SquareButton(@side: 2em){
+    border-radius: 0;
+    width: @side;
+    height: @side;
+    position: absolute;
 }
 
 input, button{
@@ -313,3 +363,53 @@ button:active{
 .slideOutRight {
     animation-name: slideOutRight;
 }
+
+/*--------------------------------------------*/
+/*---> SCROLLBAR <----------------------------*/
+/*--------------------------------------------*/
+
+@scrollBar: @darkTone;
+@scrollBarBack: transparent;
+@scrollBarSize: 10px;
+
+::-webkit-scrollbar{
+    width: @scrollBarSize;
+    height: @scrollBarSize;
+    background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-button{
+    background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-track{
+    background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-track-piece{
+    background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-thumb{
+    background: @scrollBar;
+    border-radius: @scrollBarSize/2;
+    position: absolute;
+    margin-left: -1 * @scrollBarSize;
+}
+
+::-webkit-scrollbar-corner{
+    width: @scrollBarSize;
+    height: @scrollBarSize;
+    background: @scrollBarBack;
+}
+
+::-webkit-resizer{
+    background: @scrollBarBack;
+}
+
+/*--------------------------------------------*/
+/*---> TEMPORARY WORKSPACE <------------------*/
+/*--------------------------------------------*/
+
+//Semitransparent background for temporary div viewing
+@see: rgba(21, 21, 21, 0.5);

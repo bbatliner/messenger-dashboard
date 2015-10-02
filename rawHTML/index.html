@@ -1,0 +1,199 @@
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="../client/bundle.css">
+    <title>Messenger Dashboard</title>
+    <style type="text/css">
+    	
+    	html /deep/ * { min-width: 0; min-height: 0; }
+
+    	html{
+		    height: 100%;
+		    overflow-x: hidden;
+		    /*background: url('../client/stylesheets/img/blurPhone1.jpg') no-repeat center center fixed;*/
+		    background-size: cover;
+		}
+
+		nav{
+			background-image: url('../client/stylesheets/img/transDiagmonds.png');
+		}
+
+    </style>
+</head>
+<body>
+	
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">&#9883; Messenger Dashboard</a>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<main data-hook="page-container">
+			<section class="page messages active">
+				<h2>View your messages here, <span data-hook="name">Vinesh Kannan</span>!</h2>
+					<div data-hook="add-thread">
+						<div class="add-thread">
+							<div class="form-group">
+								<!-- <label for="new-thread-name">Start a new conversation:&nbsp;</label> -->
+								<div class="awesomplete">
+									<input name="new-thread-name" placeholder="Search your friends list..." data-hook="friends-list" autocomplete="off" aria-autocomplete="list">
+									<ul></ul>
+									<span class="visually-hidden" role="status" aria-live="assertive" aria-relevant="additions"></span>
+								</div><!-- &nbsp; -->
+								<button data-hook="add-new-thread" class="btn btn-default">Go!</button>
+							</div>
+						</div>
+					</div>
+				<div data-hook="thread-list" class="threads">
+					<div class="thread animated slideInLeft">
+						<div class="beforemessages">
+							<h4 data-hook="name">Future Admins of HHCduT</h4>
+							<button data-hook="refresh" class="btn btn-xs btn-primary">&#8634;</button>
+						</div>
+						<div data-hook="message-list" class="messages">
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">wait wot</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">what the hell</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">that's a horrible way to get educated</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">i can't decide</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">if i knew that someone was in cdt</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">whether id hire or fire them on the spot</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Eric Hennenfent</span>: 
+										<span data-hook="body">http://cs196.xyz</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Eric Hennenfent</span>: 
+										<span data-hook="body">It's this class</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Eric Hennenfent</span>: 
+										<span data-hook="body">So for me, it raises the legitimacy by a large margin</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Eric Hennenfent</span>: 
+										<span data-hook="body">It's like coming home...</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">that;s true</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">https://www.youtube.com/watch?v=a6lvrEx2158</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">r u in dis vid</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Eric Hennenfent</span>: 
+										<span data-hook="body">Nope :/ I didn't join the class until after pitch signup.</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Eric Hennenfent</span>: 
+										<span data-hook="body">So I'm not really passionate about the project I'm working on, but oh well.</span	>
+								</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">What project?</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Brendan Batliner</span>: <span data-hook="body">join team Converse (real talk 	I think people will too often confuse KAHN-verse with con-Verse)
+									</span>
+								</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">cunverse</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">maluchi got a lot more active in cdt</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">guys</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">i used "ayyyymiami" today and it made sense in context</span>
+									</p>
+								</div>
+								<div class="message">
+									<p>
+										<span data-hook="sender">Vinesh Kannan</span>: 
+										<span data-hook="body">&lt;3</span>
+									</p>
+								</div>
+						</div>
+						<div class="aftermessages">
+							<input type="text" placeholder="Write a message..." data-hook="reply" class="form-control">
+							<button type="submit" data-hook="send-reply" class="btn btn-default">Send message</button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+</html>
