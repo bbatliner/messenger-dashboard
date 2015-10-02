@@ -126,6 +126,7 @@ div.container{
 .thread {
     position: absolute;
     height: 100vh - 35%; // TODO: Find a better way to do this so it only fills the height of its container (and doesn't overrun the bottom)
+    //Better way: use LESS Math to select the remaining screen space
     width: 75%;
     left: 0;
     right: 0;
@@ -371,7 +372,11 @@ button:active{
     position: absolute;
 }
 
-.add-thread{
+h2{
+    text-align: center;
+}
+
+.add-thread, .aftermessages{
     .Center();
 }
 
