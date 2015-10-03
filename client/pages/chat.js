@@ -4,6 +4,7 @@ var app = require('ampersand-app');
 var PageView = require('./base');
 var ThreadView = require('../views/thread');
 var AddThreadView = require('../views/add-thread');
+var Mousetrap = require('mousetrap');
 var ipc = require('electron-safe-ipc/guest');
 
 

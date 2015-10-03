@@ -6,6 +6,7 @@ var ipc = require('electron-safe-ipc/guest');
 var MessageCollection = require('../models/message-collection');
 var Thread = require('../models/thread');
 var Awesomplete = require('awesomplete');
+var Mousetrap = require('mousetrap');
 
 
 module.exports = View.extend({
@@ -41,6 +42,11 @@ module.exports = View.extend({
             sort: Awesomplete.SORT_BYLENGTH
         });
 
+        // Shortcut to focus search friends input
+        Mousetrap.bindGlobal(app.shortcuts.searchForThread, function () {
+            this.queryByHook('friends-list').focus();
+        }.bind(this));
+
         return this;
     },
 
@@ -71,8 +77,8 @@ module.exports = View.extend({
                 app.me.threads.add(newThread);
                 newThread.setActive();
             }
-            // Otherwise bump the existing thread
-            else {
+            // Otherwise bump the existing thread, as long as its not currently shown
+            else if (!existingThread.active) {
                 existingThread.setActive();
             }
         } 

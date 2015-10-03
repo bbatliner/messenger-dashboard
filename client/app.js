@@ -14,6 +14,11 @@ require('es6-promise').polyfill();
 // Define some constants for IPC channels
 app.ipc = require('../ipc-channels');
 
+// Define keyboard shortcuts
+require('mousetrap');
+require('mousetrapGlobalBind');
+app.shortcuts = require('./shortcuts');
+
 // attach our app to `window` so we can
 // easily access it from the console.
 window.app = app;

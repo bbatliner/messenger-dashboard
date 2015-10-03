@@ -4,6 +4,7 @@ var app = require('ampersand-app');
 var View = require('ampersand-view');
 var Message = require('../models/message');
 var MessageView = require('./message');
+var Mousetrap = require('mousetrap');
 var ipc = require('electron-safe-ipc/guest');
 var _ = require('lodash');
 
@@ -31,10 +32,16 @@ module.exports = View.extend({
         }
 
         // Resize the thread's messages when the window changes size, so the chats always fill the screen
+        this._prevHeight = -1;
         window.onresize = function () {
             // SUPER DIRTY polynomial regression I did to calculate the height of the messages scrollbox depending on the height of the window.
             // TODO: Find a pure CSS for this. Or find a more elegant javascript solution.
-            this.queryByHook('message-list').style.height = (-7.986753736*Math.pow(10,-11)*Math.pow(window.innerHeight,4)+3.90489248*Math.pow(10,-7)*Math.pow(window.innerHeight,3)-6.809750631*Math.pow(10,-4)*Math.pow(window.innerHeight,2)+5.490517914*Math.pow(10,-1)*Math.pow(window.innerHeight,1)-109.7386284).toString() + 'vh'; 
+            if (this._prevHeight === window.innerHeight) {
+                return;
+            } else {
+                this._prevHeight = window.innerHeight;
+                this.queryByHook('message-list').style.height = (-7.986753736*Math.pow(10,-11)*Math.pow(window.innerHeight,4)+3.90489248*Math.pow(10,-7)*Math.pow(window.innerHeight,3)-6.809750631*Math.pow(10,-4)*Math.pow(window.innerHeight,2)+5.490517914*Math.pow(10,-1)*Math.pow(window.innerHeight,1)-109.7386284).toString() + 'vh'; 
+            }            
         }.bind(this);
         // Call once to start
         _.defer(window.onresize);
@@ -46,6 +53,11 @@ module.exports = View.extend({
         // Add new messages received to this thread, if they belong
         ipc.removeAllListeners(messageReceived);
         ipc.on(messageReceived, function (message) {
+            if (!window.responseTimes) { window.responseTimes = []; }
+            console.log('Date.now()', Date.now());
+            console.log('Message   ', message.timestamp);
+            console.log('Difference', Date.now() - message.timestamp);
+            window.responseTimes.push(Date.now() - message.timestamp);
             this.model.messages.add(message);
             this.scrollToBottom();     
         }.bind(this));
@@ -60,7 +72,7 @@ module.exports = View.extend({
                 messageID: messageInfo.messageID,
                 threadID: messageInfo.threadID !== null ? messageInfo.threadID : this.model.threadFbid,
                 body: replyInput.value,
-                timestamp: Date.now()
+                timestamp: messageInfo.timestamp
             });
             this.model.messages.add(newMessage);
             replyInput.value = '';
@@ -71,6 +83,11 @@ module.exports = View.extend({
         this.model.messages.on('add remove sort', this.scrollToBottom.bind(this));
         this.model.on('active-changed', function() {
             _.defer(this.scrollToBottom.bind(this));
+        }.bind(this));
+
+        // Shortcut to focus write message input
+        Mousetrap.bindGlobal(app.shortcuts.writeMessage, function () {
+            this.queryByHook('reply').focus();
         }.bind(this));
 
         return this;
