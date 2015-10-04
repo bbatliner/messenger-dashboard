@@ -12,7 +12,9 @@ module.exports = AmpersandCollection.extend({
 
     mainIndex: ['threadFbid'],
 
-    comparator: 'timestamp', // TODO: Is this really necessary?
+    comparator: function (a, b) {
+        return b.lastAccessed > a.lastAccessed; // put the user's most recent thread at the top (index 0)
+    },
 
     initialize: function () {
         ipc.removeAllListeners(app.ipc.facebookFetchThreadsSuccess);
@@ -25,5 +27,9 @@ module.exports = AmpersandCollection.extend({
                 if (this.length === 1) { newThread.setActive(); }
             }.bind(this));
         }.bind(this));
+    },
+
+    getActiveIndex: function () {
+        return this.models.findIndex(function(model) { return model.active; });
     }
 });

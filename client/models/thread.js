@@ -5,6 +5,7 @@ var AmpersandState = require('ampersand-state');
 
 module.exports = AmpersandState.extend({
     type: 'object',
+
     props: {
         active: ['boolean', true, false],
         threadID: ['string', true, ''],
@@ -34,8 +35,11 @@ module.exports = AmpersandState.extend({
         hasEmailParticipant: ['boolean', true, false],
         readOnly: ['boolean', true, false],
         canReply: ['boolean', true, false],
-        lastMessageID: ['string', true, '']
+        lastMessageID: ['string', true, ''],
+        // Custom property to hold a timestamp for when the user last accessed this thread
+        lastAccessed: ['number', false, 0]
     },
+
     derived: {
         isGroupChat: {
             deps: ['participants'],
@@ -45,6 +49,14 @@ module.exports = AmpersandState.extend({
             }
         },
     },
+
+    initialize: function () {
+        this.on('bump', function () {
+            this.lastAccessed = Date.now();
+        }.bind(this));
+        this.trigger('bump');
+    },
+
     setActive: function () {
         var oldActive = -1;
         if (this.collection) {

@@ -53,11 +53,6 @@ module.exports = View.extend({
         // Add new messages received to this thread, if they belong
         ipc.removeAllListeners(messageReceived);
         ipc.on(messageReceived, function (message) {
-            if (!window.responseTimes) { window.responseTimes = []; }
-            console.log('Date.now()', Date.now());
-            console.log('Message   ', message.timestamp);
-            console.log('Difference', Date.now() - message.timestamp);
-            window.responseTimes.push(Date.now() - message.timestamp);
             this.model.messages.add(message);
             this.scrollToBottom();     
         }.bind(this));
@@ -75,6 +70,7 @@ module.exports = View.extend({
                 timestamp: messageInfo.timestamp
             });
             this.model.messages.add(newMessage);
+            this.model.trigger('bump');
             replyInput.value = '';
             replyInput.focus();
         }.bind(this));
