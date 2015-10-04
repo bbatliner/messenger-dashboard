@@ -20,6 +20,10 @@ module.exports = PageView.extend({
 
         ipc.send(app.ipc.facebookFetchThreads, 1);
 
+        // TODO: Render the "thread dashboard" and let the user choose which chat they want
+        // TODO: Add shortcuts to let the user move up to the dashboard and down to a thread
+        // TODO: Animate these navigations
+
         app.me.threads.on('active-changed', this.swapActiveThread.bind(this));
 
         this.renderSubview(new AddThreadView({

@@ -53,6 +53,8 @@ module.exports = View.extend({
         // Add new messages received to this thread, if they belong
         ipc.removeAllListeners(messageReceived);
         ipc.on(messageReceived, function (message) {
+            // TODO: Add a notification to the app alerting the user of this new message!
+            // TODO: Make keyboard shortcuts to navigate to the threads with notifications.
             this.model.messages.add(message);
             this.scrollToBottom();
         }.bind(this));
