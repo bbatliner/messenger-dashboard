@@ -17,6 +17,9 @@ module.exports = AmpersandCollection.extend({
     },
 
     initialize: function () {
+        this._lastSetActive = 0;
+        this._setActiveInterval = 600;
+
         ipc.removeAllListeners(app.ipc.facebookFetchThreadsSuccess);
         ipc.on(app.ipc.facebookFetchThreadsSuccess, function (threads) {
             threads.forEach(function (thread) {

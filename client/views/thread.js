@@ -54,7 +54,7 @@ module.exports = View.extend({
         ipc.removeAllListeners(messageReceived);
         ipc.on(messageReceived, function (message) {
             this.model.messages.add(message);
-            this.scrollToBottom();     
+            this.scrollToBottom();
         }.bind(this));
 
         ipc.removeAllListeners(sentMessage);
@@ -105,10 +105,16 @@ module.exports = View.extend({
     },
 
     scrollToBottom: function () {
-        var els = document.querySelectorAll('.thread .messages');
-        for (var i = 0, len = els.length; i < len; i++) {
-            var el = els[i];
-            el.scrollTop = el.scrollHeight;
+        if (this.model.active) {
+            var els = document.querySelectorAll('.thread .messages');
+            var scroll = function () {
+                el.scrollTop = el.scrollHeight;
+            };
+            for (var i = 0, len = els.length; i < len; i++) {
+                var el = els[i];
+                // TODO: The thread should "remember" its scroll pos so you can pick up from where you were last.
+                _.defer(scroll);
+            }
         }
     }
 });

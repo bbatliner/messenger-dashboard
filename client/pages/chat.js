@@ -28,22 +28,16 @@ module.exports = PageView.extend({
 
         this._nextSwitch = 0;
         Mousetrap.bindGlobal(app.shortcuts.previousChat, function () {
-            if (Date.now() > this._nextSwitch) {
-                this._nextSwitch = Date.now() + 1000;
-                var activeIndex = app.me.threads.getActiveIndex();
-                if (activeIndex - 1 >= 0) {
-                    app.me.threads.at(activeIndex - 1).setActive();
-                }
+            var activeIndex = app.me.threads.getActiveIndex();
+            if (activeIndex - 1 >= 0) {
+                app.me.threads.at(activeIndex - 1).setActive();
             }
         }.bind(this));
 
         Mousetrap.bindGlobal(app.shortcuts.nextChat, function () {
-            if (Date.now() > this._nextSwitch) {
-                this._nextSwitch = Date.now() + 1000;
-                var activeIndex = app.me.threads.getActiveIndex();
-                if (activeIndex + 1 < app.me.threads.length) {
-                    app.me.threads.at(activeIndex + 1).setActive();
-                }
+            var activeIndex = app.me.threads.getActiveIndex();
+            if (activeIndex + 1 < app.me.threads.length) {
+                app.me.threads.at(activeIndex + 1).setActive();
             }
         }.bind(this));
 
@@ -66,7 +60,7 @@ module.exports = PageView.extend({
             // Remove it from the DOM when its animation finishes
             setTimeout(function () {
                 currentThreadEl.parentNode.removeChild(currentThreadEl);
-            }, 1000);
+            }, app.me.threads._setActiveInterval);
         }
 
         // Render the new thread, populating its .el property

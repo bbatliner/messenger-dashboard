@@ -114,6 +114,8 @@ module.exports = function () {
                 if (err) {
                     return console.error(err);
                 }
+                // Marks message as read as soon as they're received
+                api.markAsRead(message.threadID);
                 message.threadID = message.threadID.toString();
                 ipc.send(ipcChannels.facebookMessageReceived + '-' + message.threadID, message);
             });
@@ -132,6 +134,8 @@ module.exports = function () {
                 console.error(err);
                 return ipc.send(ipcChannels.facebookSendMessageError, JSON.stringify(err));
             }
+            // Marks message as read as soon as they're sent
+            api.markAsRead(threadId);
             ipc.send(ipcChannels.facebookSendMessage + '-' + threadId, info);
         });
     });

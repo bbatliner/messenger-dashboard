@@ -58,14 +58,15 @@ module.exports = AmpersandState.extend({
     },
 
     setActive: function () {
-        var oldActive = -1;
-        if (this.collection) {
+        if (this.collection && Date.now() > this.collection._lastSetActive + this.collection._setActiveInterval) {
+            this.collection._lastSetActive = Date.now();
+            var oldActive = -1;
             this.collection.forEach(function (thread, index) {
                 if (thread.active) { oldActive = index; }
                 thread.active = false;
             });
+            this.active = true;
+            this.trigger('active-changed', oldActive);
         }
-        this.active = true;
-        this.trigger('active-changed', oldActive);
     }
 });
