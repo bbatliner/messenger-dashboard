@@ -26,10 +26,10 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 1024, height: 768, 'auto-hide-menu-bar': true});
+    mainWindow = new BrowserWindow({width: 1024, height: 768, 'auto-hide-menu-bar': true, 'web-preferences': { 'node-integration': false }});
 
     // and load the index.html of the app.
-    mainWindow.loadUrl('file://' + __dirname + '/client/index.html');
+    mainWindow.loadUrl('https://www.messenger.com');
 
     // Open the DevTools.
     mainWindow.openDevTools();
